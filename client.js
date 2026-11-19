@@ -6,6 +6,64 @@ window.__ModuleLoader__.load({
   factory(require) {
     const React = require('react')
     const h = React.createElement
+var PanoramaMarkdown=(()=>{var O=Object.defineProperty;var me=Object.getOwnPropertyDescriptor;var we=Object.getOwnPropertyNames;var ye=Object.prototype.hasOwnProperty;var Re=(n,e)=>{for(var t in e)O(n,t,{get:e[t],enumerable:!0})},Se=(n,e,t,s)=>{if(e&&typeof e=="object"||typeof e=="function")for(let r of we(e))!ye.call(n,r)&&r!==t&&O(n,r,{get:()=>e[r],enumerable:!(s=me(e,r))||s.enumerable});return n};var Te=n=>Se(O({},"__esModule",{value:!0}),n);var ft={};Re(ft,{Hooks:()=>_,Lexer:()=>w,Marked:()=>xe,Parser:()=>y,Renderer:()=>L,TextRenderer:()=>Z,Tokenizer:()=>A,defaults:()=>R,getDefaults:()=>B,lexer:()=>gt,marked:()=>u,options:()=>lt,parse:()=>pt,parseInline:()=>ht,parser:()=>ut,setOptions:()=>at,use:()=>ot,walkTokens:()=>ct});function B(){return{async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null}}var R=B();function le(n){R=n}var z={exec:()=>null};function g(n,e=""){let t=typeof n=="string"?n:n.source,s={replace:(r,i)=>{let l=typeof i=="string"?i:i.source;return l=l.replace(x.caret,"$1"),t=t.replace(r,l),s},getRegex:()=>new RegExp(t,e)};return s}var x={codeRemoveIndent:/^(?: {1,4}| {0,3}\t)/gm,outputLinkReplace:/\\([\[\]])/g,indentCodeCompensation:/^(\s+)(?:```)/,beginningSpace:/^\s+/,endingHash:/#$/,startingSpaceChar:/^ /,endingSpaceChar:/ $/,nonSpaceChar:/[^ ]/,newLineCharGlobal:/\n/g,tabCharGlobal:/\t/g,multipleSpaceGlobal:/\s+/g,blankLine:/^[ \t]*$/,doubleBlankLine:/\n[ \t]*\n[ \t]*$/,blockquoteStart:/^ {0,3}>/,blockquoteSetextReplace:/\n {0,3}((?:=+|-+) *)(?=\n|$)/g,blockquoteSetextReplace2:/^ {0,3}>[ \t]?/gm,listReplaceTabs:/^\t+/,listReplaceNesting:/^ {1,4}(?=( {4})*[^ ])/g,listIsTask:/^\[[ xX]\] /,listReplaceTask:/^\[[ xX]\] +/,anyLine:/\n.*\n/,hrefBrackets:/^<(.*)>$/,tableDelimiter:/[:|]/,tableAlignChars:/^\||\| *$/g,tableRowBlankLine:/\n[ \t]*$/,tableAlignRight:/^ *-+: *$/,tableAlignCenter:/^ *:-+: *$/,tableAlignLeft:/^ *:-+ *$/,startATag:/^<a /i,endATag:/^<\/a>/i,startPreScriptTag:/^<(pre|code|kbd|script)(\s|>)/i,endPreScriptTag:/^<\/(pre|code|kbd|script)(\s|>)/i,startAngleBracket:/^</,endAngleBracket:/>$/,pedanticHrefTitle:/^([^'"]*[^\s])\s+(['"])(.*)\2/,unicodeAlphaNumeric:/[\p{L}\p{N}]/u,escapeTest:/[&<>"']/,escapeReplace:/[&<>"']/g,escapeTestNoEncode:/[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,escapeReplaceNoEncode:/[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/g,unescapeTest:/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig,caret:/(^|[^\[])\^/g,percentDecode:/%25/g,findPipe:/\|/g,splitPipe:/ \|/,slashPipe:/\\\|/g,carriageReturn:/\r\n|\r/g,spaceLine:/^ +$/gm,notSpaceStart:/^\S*/,endingNewline:/\n$/,listItemRegex:n=>new RegExp(`^( {0,3}${n})((?:[	 ][^\\n]*)?(?:\\n|$))`),nextBulletRegex:n=>new RegExp(`^ {0,${Math.min(3,n-1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`),hrRegex:n=>new RegExp(`^ {0,${Math.min(3,n-1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),fencesBeginRegex:n=>new RegExp(`^ {0,${Math.min(3,n-1)}}(?:\`\`\`|~~~)`),headingBeginRegex:n=>new RegExp(`^ {0,${Math.min(3,n-1)}}#`),htmlBeginRegex:n=>new RegExp(`^ {0,${Math.min(3,n-1)}}<(?:[a-z].*>|!--)`,"i")},$e=/^(?:[ \t]*(?:\n|$))+/,ve=/^((?: {4}| {0,3}\t)[^\n]+(?:\n(?:[ \t]*(?:\n|$))*)?)+/,ze=/^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/,I=/^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,_e=/^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,H=/(?:[*+-]|\d{1,9}[.)])/,ae=/^(?!bull |blockCode|fences|blockquote|heading|html|table)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html|table))+?)\n {0,3}(=+|-+) *(?:\n+|$)/,oe=g(ae).replace(/bull/g,H).replace(/blockCode/g,/(?: {4}| {0,3}\t)/).replace(/fences/g,/ {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g,/ {0,3}>/).replace(/heading/g,/ {0,3}#{1,6}/).replace(/html/g,/ {0,3}<[^\n>]+>\n/).replace(/\|table/g,"").getRegex(),Ae=g(ae).replace(/bull/g,H).replace(/blockCode/g,/(?: {4}| {0,3}\t)/).replace(/fences/g,/ {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g,/ {0,3}>/).replace(/heading/g,/ {0,3}#{1,6}/).replace(/html/g,/ {0,3}<[^\n>]+>\n/).replace(/table/g,/ {0,3}\|?(?:[:\- ]*\|)+[\:\- ]*\n/).getRegex(),Q=/^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,Le=/^[^\n]+/,F=/(?!\s*\])(?:\\.|[^\[\]\\])+/,Ie=g(/^ {0,3}\[(label)\]: *(?:\n[ \t]*)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n[ \t]*)?| *\n[ \t]*)(title))? *(?:\n+|$)/).replace("label",F).replace("title",/(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(),Pe=g(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g,H).getRegex(),E="address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul",U=/<!--(?:-?>|[\s\S]*?(?:-->|$))/,Ce=g("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$))","i").replace("comment",U).replace("tag",E).replace("attribute",/ +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(),ce=g(Q).replace("hr",I).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("|table","").replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",E).getRegex(),Be=g(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph",ce).getRegex(),X={blockquote:Be,code:ve,def:Ie,fences:ze,heading:_e,hr:I,html:Ce,lheading:oe,list:Pe,newline:$e,paragraph:ce,table:z,text:Le},te=g("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr",I).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("blockquote"," {0,3}>").replace("code","(?: {4}| {0,3}	)[^\\n]").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",E).getRegex(),Ee={...X,lheading:Ae,table:te,paragraph:g(Q).replace("hr",I).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("table",te).replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",E).getRegex()},qe={...X,html:g(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment",U).replace(/tag/g,"(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,heading:/^(#{1,6})(.*)(?:\n+|$)/,fences:z,lheading:/^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,paragraph:g(Q).replace("hr",I).replace("heading",` *#{1,6} *[^
+]`).replace("lheading",oe).replace("|table","").replace("blockquote"," {0,3}>").replace("|fences","").replace("|list","").replace("|html","").replace("|tag","").getRegex()},Ze=/^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,De=/^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,he=/^( {2,}|\\)\n(?!\s*$)/,Me=/^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,q=/[\p{P}\p{S}]/u,W=/[\s\p{P}\p{S}]/u,pe=/[^\s\p{P}\p{S}]/u,Oe=g(/^((?![*_])punctSpace)/,"u").replace(/punctSpace/g,W).getRegex(),ue=/(?!~)[\p{P}\p{S}]/u,Ge=/(?!~)[\s\p{P}\p{S}]/u,Ne=/(?:[^\s\p{P}\p{S}]|~)/u,je=/\[[^[\]]*?\]\((?:\\.|[^\\\(\)]|\((?:\\.|[^\\\(\)])*\))*\)|`[^`]*?`|<[^<>]*?>/g,ge=/^(?:\*+(?:((?!\*)punct)|[^\s*]))|^_+(?:((?!_)punct)|([^\s_]))/,He=g(ge,"u").replace(/punct/g,q).getRegex(),Qe=g(ge,"u").replace(/punct/g,ue).getRegex(),fe="^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)punct(\\*+)(?=[\\s]|$)|notPunctSpace(\\*+)(?!\\*)(?=punctSpace|$)|(?!\\*)punctSpace(\\*+)(?=notPunctSpace)|[\\s](\\*+)(?!\\*)(?=punct)|(?!\\*)punct(\\*+)(?!\\*)(?=punct)|notPunctSpace(\\*+)(?=notPunctSpace)",Fe=g(fe,"gu").replace(/notPunctSpace/g,pe).replace(/punctSpace/g,W).replace(/punct/g,q).getRegex(),Ue=g(fe,"gu").replace(/notPunctSpace/g,Ne).replace(/punctSpace/g,Ge).replace(/punct/g,ue).getRegex(),Xe=g("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)punct(_+)(?=[\\s]|$)|notPunctSpace(_+)(?!_)(?=punctSpace|$)|(?!_)punctSpace(_+)(?=notPunctSpace)|[\\s](_+)(?!_)(?=punct)|(?!_)punct(_+)(?!_)(?=punct)","gu").replace(/notPunctSpace/g,pe).replace(/punctSpace/g,W).replace(/punct/g,q).getRegex(),We=g(/\\(punct)/,"gu").replace(/punct/g,q).getRegex(),Je=g(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme",/[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email",/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(),Ke=g(U).replace("(?:-->|$)","-->").getRegex(),Ve=g("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment",Ke).replace("attribute",/\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(),C=/(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/,Ye=g(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]*(?:\n[ \t]*)?)(title))?\s*\)/).replace("label",C).replace("href",/<(?:\\.|[^\n<>\\])+>|[^ \t\n\x00-\x1f]*/).replace("title",/"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(),ke=g(/^!?\[(label)\]\[(ref)\]/).replace("label",C).replace("ref",F).getRegex(),de=g(/^!?\[(ref)\](?:\[\])?/).replace("ref",F).getRegex(),et=g("reflink|nolink(?!\\()","g").replace("reflink",ke).replace("nolink",de).getRegex(),J={_backpedal:z,anyPunctuation:We,autolink:Je,blockSkip:je,br:he,code:De,del:z,emStrongLDelim:He,emStrongRDelimAst:Fe,emStrongRDelimUnd:Xe,escape:Ze,link:Ye,nolink:de,punctuation:Oe,reflink:ke,reflinkSearch:et,tag:Ve,text:Me,url:z},tt={...J,link:g(/^!?\[(label)\]\((.*?)\)/).replace("label",C).getRegex(),reflink:g(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label",C).getRegex()},G={...J,emStrongRDelimAst:Ue,emStrongLDelim:Qe,url:g(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,"i").replace("email",/[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),_backpedal:/(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,del:/^(~~?)(?=[^\s~])((?:\\.|[^\\])*?(?:\\.|[^\s~\\]))\1(?=[^~]|$)/,text:/^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/},nt={...G,br:g(he).replace("{2,}","*").getRegex(),text:g(G.text).replace("\\b_","\\b_| {2,}\\n").replace(/\{2,\}/g,"*").getRegex()},P={normal:X,gfm:Ee,pedantic:qe},$={normal:J,gfm:G,breaks:nt,pedantic:tt},rt={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},ne=n=>rt[n];function m(n,e){if(e){if(x.escapeTest.test(n))return n.replace(x.escapeReplace,ne)}else if(x.escapeTestNoEncode.test(n))return n.replace(x.escapeReplaceNoEncode,ne);return n}function re(n){try{n=encodeURI(n).replace(x.percentDecode,"%")}catch{return null}return n}function se(n,e){let t=n.replace(x.findPipe,(i,l,a)=>{let c=!1,o=l;for(;--o>=0&&a[o]==="\\";)c=!c;return c?"|":" |"}),s=t.split(x.splitPipe),r=0;if(s[0].trim()||s.shift(),s.length>0&&!s.at(-1)?.trim()&&s.pop(),e)if(s.length>e)s.splice(e);else for(;s.length<e;)s.push("");for(;r<s.length;r++)s[r]=s[r].trim().replace(x.slashPipe,"|");return s}function v(n,e,t){let s=n.length;if(s===0)return"";let r=0;for(;r<s;){let i=n.charAt(s-r-1);if(i===e&&!t)r++;else if(i!==e&&t)r++;else break}return n.slice(0,s-r)}function st(n,e){if(n.indexOf(e[1])===-1)return-1;let t=0;for(let s=0;s<n.length;s++)if(n[s]==="\\")s++;else if(n[s]===e[0])t++;else if(n[s]===e[1]&&(t--,t<0))return s;return t>0?-2:-1}function ie(n,e,t,s,r){let i=e.href,l=e.title||null,a=n[1].replace(r.other.outputLinkReplace,"$1");s.state.inLink=!0;let c={type:n[0].charAt(0)==="!"?"image":"link",raw:t,href:i,title:l,text:a,tokens:s.inlineTokens(a)};return s.state.inLink=!1,c}function it(n,e,t){let s=n.match(t.other.indentCodeCompensation);if(s===null)return e;let r=s[1];return e.split(`
+`).map(i=>{let l=i.match(t.other.beginningSpace);if(l===null)return i;let[a]=l;return a.length>=r.length?i.slice(r.length):i}).join(`
+`)}var A=class{options;rules;lexer;constructor(n){this.options=n||R}space(n){let e=this.rules.block.newline.exec(n);if(e&&e[0].length>0)return{type:"space",raw:e[0]}}code(n){let e=this.rules.block.code.exec(n);if(e){let t=e[0].replace(this.rules.other.codeRemoveIndent,"");return{type:"code",raw:e[0],codeBlockStyle:"indented",text:this.options.pedantic?t:v(t,`
+`)}}}fences(n){let e=this.rules.block.fences.exec(n);if(e){let t=e[0],s=it(t,e[3]||"",this.rules);return{type:"code",raw:t,lang:e[2]?e[2].trim().replace(this.rules.inline.anyPunctuation,"$1"):e[2],text:s}}}heading(n){let e=this.rules.block.heading.exec(n);if(e){let t=e[2].trim();if(this.rules.other.endingHash.test(t)){let s=v(t,"#");(this.options.pedantic||!s||this.rules.other.endingSpaceChar.test(s))&&(t=s.trim())}return{type:"heading",raw:e[0],depth:e[1].length,text:t,tokens:this.lexer.inline(t)}}}hr(n){let e=this.rules.block.hr.exec(n);if(e)return{type:"hr",raw:v(e[0],`
+`)}}blockquote(n){let e=this.rules.block.blockquote.exec(n);if(e){let t=v(e[0],`
+`).split(`
+`),s="",r="",i=[];for(;t.length>0;){let l=!1,a=[],c;for(c=0;c<t.length;c++)if(this.rules.other.blockquoteStart.test(t[c]))a.push(t[c]),l=!0;else if(!l)a.push(t[c]);else break;t=t.slice(c);let o=a.join(`
+`),h=o.replace(this.rules.other.blockquoteSetextReplace,`
+    $1`).replace(this.rules.other.blockquoteSetextReplace2,"");s=s?`${s}
+${o}`:o,r=r?`${r}
+${h}`:h;let k=this.lexer.state.top;if(this.lexer.state.top=!0,this.lexer.blockTokens(h,i,!0),this.lexer.state.top=k,t.length===0)break;let p=i.at(-1);if(p?.type==="code")break;if(p?.type==="blockquote"){let d=p,f=d.raw+`
+`+t.join(`
+`),b=this.blockquote(f);i[i.length-1]=b,s=s.substring(0,s.length-d.raw.length)+b.raw,r=r.substring(0,r.length-d.text.length)+b.text;break}else if(p?.type==="list"){let d=p,f=d.raw+`
+`+t.join(`
+`),b=this.list(f);i[i.length-1]=b,s=s.substring(0,s.length-p.raw.length)+b.raw,r=r.substring(0,r.length-d.raw.length)+b.raw,t=f.substring(i.at(-1).raw.length).split(`
+`);continue}}return{type:"blockquote",raw:s,tokens:i,text:r}}}list(n){let e=this.rules.block.list.exec(n);if(e){let t=e[1].trim(),s=t.length>1,r={type:"list",raw:"",ordered:s,start:s?+t.slice(0,-1):"",loose:!1,items:[]};t=s?`\\d{1,9}\\${t.slice(-1)}`:`\\${t}`,this.options.pedantic&&(t=s?t:"[*+-]");let i=this.rules.other.listItemRegex(t),l=!1;for(;n;){let c=!1,o="",h="";if(!(e=i.exec(n))||this.rules.block.hr.test(n))break;o=e[0],n=n.substring(o.length);let k=e[2].split(`
+`,1)[0].replace(this.rules.other.listReplaceTabs,D=>" ".repeat(3*D.length)),p=n.split(`
+`,1)[0],d=!k.trim(),f=0;if(this.options.pedantic?(f=2,h=k.trimStart()):d?f=e[1].length+1:(f=e[2].search(this.rules.other.nonSpaceChar),f=f>4?1:f,h=k.slice(f),f+=e[1].length),d&&this.rules.other.blankLine.test(p)&&(o+=p+`
+`,n=n.substring(p.length+1),c=!0),!c){let D=this.rules.other.nextBulletRegex(f),V=this.rules.other.hrRegex(f),Y=this.rules.other.fencesBeginRegex(f),ee=this.rules.other.headingBeginRegex(f),be=this.rules.other.htmlBeginRegex(f);for(;n;){let M=n.split(`
+`,1)[0],T;if(p=M,this.options.pedantic?(p=p.replace(this.rules.other.listReplaceNesting,"  "),T=p):T=p.replace(this.rules.other.tabCharGlobal,"    "),Y.test(p)||ee.test(p)||be.test(p)||D.test(p)||V.test(p))break;if(T.search(this.rules.other.nonSpaceChar)>=f||!p.trim())h+=`
+`+T.slice(f);else{if(d||k.replace(this.rules.other.tabCharGlobal,"    ").search(this.rules.other.nonSpaceChar)>=4||Y.test(k)||ee.test(k)||V.test(k))break;h+=`
+`+p}!d&&!p.trim()&&(d=!0),o+=M+`
+`,n=n.substring(M.length+1),k=T.slice(f)}}r.loose||(l?r.loose=!0:this.rules.other.doubleBlankLine.test(o)&&(l=!0));let b=null,K;this.options.gfm&&(b=this.rules.other.listIsTask.exec(h),b&&(K=b[0]!=="[ ] ",h=h.replace(this.rules.other.listReplaceTask,""))),r.items.push({type:"list_item",raw:o,task:!!b,checked:K,loose:!1,text:h,tokens:[]}),r.raw+=o}let a=r.items.at(-1);if(a)a.raw=a.raw.trimEnd(),a.text=a.text.trimEnd();else return;r.raw=r.raw.trimEnd();for(let c=0;c<r.items.length;c++)if(this.lexer.state.top=!1,r.items[c].tokens=this.lexer.blockTokens(r.items[c].text,[]),!r.loose){let o=r.items[c].tokens.filter(k=>k.type==="space"),h=o.length>0&&o.some(k=>this.rules.other.anyLine.test(k.raw));r.loose=h}if(r.loose)for(let c=0;c<r.items.length;c++)r.items[c].loose=!0;return r}}html(n){let e=this.rules.block.html.exec(n);if(e)return{type:"html",block:!0,raw:e[0],pre:e[1]==="pre"||e[1]==="script"||e[1]==="style",text:e[0]}}def(n){let e=this.rules.block.def.exec(n);if(e){let t=e[1].toLowerCase().replace(this.rules.other.multipleSpaceGlobal," "),s=e[2]?e[2].replace(this.rules.other.hrefBrackets,"$1").replace(this.rules.inline.anyPunctuation,"$1"):"",r=e[3]?e[3].substring(1,e[3].length-1).replace(this.rules.inline.anyPunctuation,"$1"):e[3];return{type:"def",tag:t,raw:e[0],href:s,title:r}}}table(n){let e=this.rules.block.table.exec(n);if(!e||!this.rules.other.tableDelimiter.test(e[2]))return;let t=se(e[1]),s=e[2].replace(this.rules.other.tableAlignChars,"").split("|"),r=e[3]?.trim()?e[3].replace(this.rules.other.tableRowBlankLine,"").split(`
+`):[],i={type:"table",raw:e[0],header:[],align:[],rows:[]};if(t.length===s.length){for(let l of s)this.rules.other.tableAlignRight.test(l)?i.align.push("right"):this.rules.other.tableAlignCenter.test(l)?i.align.push("center"):this.rules.other.tableAlignLeft.test(l)?i.align.push("left"):i.align.push(null);for(let l=0;l<t.length;l++)i.header.push({text:t[l],tokens:this.lexer.inline(t[l]),header:!0,align:i.align[l]});for(let l of r)i.rows.push(se(l,i.header.length).map((a,c)=>({text:a,tokens:this.lexer.inline(a),header:!1,align:i.align[c]})));return i}}lheading(n){let e=this.rules.block.lheading.exec(n);if(e)return{type:"heading",raw:e[0],depth:e[2].charAt(0)==="="?1:2,text:e[1],tokens:this.lexer.inline(e[1])}}paragraph(n){let e=this.rules.block.paragraph.exec(n);if(e){let t=e[1].charAt(e[1].length-1)===`
+`?e[1].slice(0,-1):e[1];return{type:"paragraph",raw:e[0],text:t,tokens:this.lexer.inline(t)}}}text(n){let e=this.rules.block.text.exec(n);if(e)return{type:"text",raw:e[0],text:e[0],tokens:this.lexer.inline(e[0])}}escape(n){let e=this.rules.inline.escape.exec(n);if(e)return{type:"escape",raw:e[0],text:e[1]}}tag(n){let e=this.rules.inline.tag.exec(n);if(e)return!this.lexer.state.inLink&&this.rules.other.startATag.test(e[0])?this.lexer.state.inLink=!0:this.lexer.state.inLink&&this.rules.other.endATag.test(e[0])&&(this.lexer.state.inLink=!1),!this.lexer.state.inRawBlock&&this.rules.other.startPreScriptTag.test(e[0])?this.lexer.state.inRawBlock=!0:this.lexer.state.inRawBlock&&this.rules.other.endPreScriptTag.test(e[0])&&(this.lexer.state.inRawBlock=!1),{type:"html",raw:e[0],inLink:this.lexer.state.inLink,inRawBlock:this.lexer.state.inRawBlock,block:!1,text:e[0]}}link(n){let e=this.rules.inline.link.exec(n);if(e){let t=e[2].trim();if(!this.options.pedantic&&this.rules.other.startAngleBracket.test(t)){if(!this.rules.other.endAngleBracket.test(t))return;let i=v(t.slice(0,-1),"\\");if((t.length-i.length)%2===0)return}else{let i=st(e[2],"()");if(i===-2)return;if(i>-1){let a=(e[0].indexOf("!")===0?5:4)+e[1].length+i;e[2]=e[2].substring(0,i),e[0]=e[0].substring(0,a).trim(),e[3]=""}}let s=e[2],r="";if(this.options.pedantic){let i=this.rules.other.pedanticHrefTitle.exec(s);i&&(s=i[1],r=i[3])}else r=e[3]?e[3].slice(1,-1):"";return s=s.trim(),this.rules.other.startAngleBracket.test(s)&&(this.options.pedantic&&!this.rules.other.endAngleBracket.test(t)?s=s.slice(1):s=s.slice(1,-1)),ie(e,{href:s&&s.replace(this.rules.inline.anyPunctuation,"$1"),title:r&&r.replace(this.rules.inline.anyPunctuation,"$1")},e[0],this.lexer,this.rules)}}reflink(n,e){let t;if((t=this.rules.inline.reflink.exec(n))||(t=this.rules.inline.nolink.exec(n))){let s=(t[2]||t[1]).replace(this.rules.other.multipleSpaceGlobal," "),r=e[s.toLowerCase()];if(!r){let i=t[0].charAt(0);return{type:"text",raw:i,text:i}}return ie(t,r,t[0],this.lexer,this.rules)}}emStrong(n,e,t=""){let s=this.rules.inline.emStrongLDelim.exec(n);if(!s||s[3]&&t.match(this.rules.other.unicodeAlphaNumeric))return;if(!(s[1]||s[2]||"")||!t||this.rules.inline.punctuation.exec(t)){let i=[...s[0]].length-1,l,a,c=i,o=0,h=s[0][0]==="*"?this.rules.inline.emStrongRDelimAst:this.rules.inline.emStrongRDelimUnd;for(h.lastIndex=0,e=e.slice(-1*n.length+i);(s=h.exec(e))!=null;){if(l=s[1]||s[2]||s[3]||s[4]||s[5]||s[6],!l)continue;if(a=[...l].length,s[3]||s[4]){c+=a;continue}else if((s[5]||s[6])&&i%3&&!((i+a)%3)){o+=a;continue}if(c-=a,c>0)continue;a=Math.min(a,a+c+o);let k=[...s[0]][0].length,p=n.slice(0,i+s.index+k+a);if(Math.min(i,a)%2){let f=p.slice(1,-1);return{type:"em",raw:p,text:f,tokens:this.lexer.inlineTokens(f)}}let d=p.slice(2,-2);return{type:"strong",raw:p,text:d,tokens:this.lexer.inlineTokens(d)}}}}codespan(n){let e=this.rules.inline.code.exec(n);if(e){let t=e[2].replace(this.rules.other.newLineCharGlobal," "),s=this.rules.other.nonSpaceChar.test(t),r=this.rules.other.startingSpaceChar.test(t)&&this.rules.other.endingSpaceChar.test(t);return s&&r&&(t=t.substring(1,t.length-1)),{type:"codespan",raw:e[0],text:t}}}br(n){let e=this.rules.inline.br.exec(n);if(e)return{type:"br",raw:e[0]}}del(n){let e=this.rules.inline.del.exec(n);if(e)return{type:"del",raw:e[0],text:e[2],tokens:this.lexer.inlineTokens(e[2])}}autolink(n){let e=this.rules.inline.autolink.exec(n);if(e){let t,s;return e[2]==="@"?(t=e[1],s="mailto:"+t):(t=e[1],s=t),{type:"link",raw:e[0],text:t,href:s,tokens:[{type:"text",raw:t,text:t}]}}}url(n){let e;if(e=this.rules.inline.url.exec(n)){let t,s;if(e[2]==="@")t=e[0],s="mailto:"+t;else{let r;do r=e[0],e[0]=this.rules.inline._backpedal.exec(e[0])?.[0]??"";while(r!==e[0]);t=e[0],e[1]==="www."?s="http://"+e[0]:s=e[0]}return{type:"link",raw:e[0],text:t,href:s,tokens:[{type:"text",raw:t,text:t}]}}}inlineText(n){let e=this.rules.inline.text.exec(n);if(e){let t=this.lexer.state.inRawBlock;return{type:"text",raw:e[0],text:e[0],escaped:t}}}},w=class N{tokens;options;state;tokenizer;inlineQueue;constructor(e){this.tokens=[],this.tokens.links=Object.create(null),this.options=e||R,this.options.tokenizer=this.options.tokenizer||new A,this.tokenizer=this.options.tokenizer,this.tokenizer.options=this.options,this.tokenizer.lexer=this,this.inlineQueue=[],this.state={inLink:!1,inRawBlock:!1,top:!0};let t={other:x,block:P.normal,inline:$.normal};this.options.pedantic?(t.block=P.pedantic,t.inline=$.pedantic):this.options.gfm&&(t.block=P.gfm,this.options.breaks?t.inline=$.breaks:t.inline=$.gfm),this.tokenizer.rules=t}static get rules(){return{block:P,inline:$}}static lex(e,t){return new N(t).lex(e)}static lexInline(e,t){return new N(t).inlineTokens(e)}lex(e){e=e.replace(x.carriageReturn,`
+`),this.blockTokens(e,this.tokens);for(let t=0;t<this.inlineQueue.length;t++){let s=this.inlineQueue[t];this.inlineTokens(s.src,s.tokens)}return this.inlineQueue=[],this.tokens}blockTokens(e,t=[],s=!1){for(this.options.pedantic&&(e=e.replace(x.tabCharGlobal,"    ").replace(x.spaceLine,""));e;){let r;if(this.options.extensions?.block?.some(l=>(r=l.call({lexer:this},e,t))?(e=e.substring(r.raw.length),t.push(r),!0):!1))continue;if(r=this.tokenizer.space(e)){e=e.substring(r.raw.length);let l=t.at(-1);r.raw.length===1&&l!==void 0?l.raw+=`
+`:t.push(r);continue}if(r=this.tokenizer.code(e)){e=e.substring(r.raw.length);let l=t.at(-1);l?.type==="paragraph"||l?.type==="text"?(l.raw+=`
+`+r.raw,l.text+=`
+`+r.text,this.inlineQueue.at(-1).src=l.text):t.push(r);continue}if(r=this.tokenizer.fences(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.heading(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.hr(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.blockquote(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.list(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.html(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.def(e)){e=e.substring(r.raw.length);let l=t.at(-1);l?.type==="paragraph"||l?.type==="text"?(l.raw+=`
+`+r.raw,l.text+=`
+`+r.raw,this.inlineQueue.at(-1).src=l.text):this.tokens.links[r.tag]||(this.tokens.links[r.tag]={href:r.href,title:r.title});continue}if(r=this.tokenizer.table(e)){e=e.substring(r.raw.length),t.push(r);continue}if(r=this.tokenizer.lheading(e)){e=e.substring(r.raw.length),t.push(r);continue}let i=e;if(this.options.extensions?.startBlock){let l=1/0,a=e.slice(1),c;this.options.extensions.startBlock.forEach(o=>{c=o.call({lexer:this},a),typeof c=="number"&&c>=0&&(l=Math.min(l,c))}),l<1/0&&l>=0&&(i=e.substring(0,l+1))}if(this.state.top&&(r=this.tokenizer.paragraph(i))){let l=t.at(-1);s&&l?.type==="paragraph"?(l.raw+=`
+`+r.raw,l.text+=`
+`+r.text,this.inlineQueue.pop(),this.inlineQueue.at(-1).src=l.text):t.push(r),s=i.length!==e.length,e=e.substring(r.raw.length);continue}if(r=this.tokenizer.text(e)){e=e.substring(r.raw.length);let l=t.at(-1);l?.type==="text"?(l.raw+=`
+`+r.raw,l.text+=`
+`+r.text,this.inlineQueue.pop(),this.inlineQueue.at(-1).src=l.text):t.push(r);continue}if(e){let l="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(l);break}else throw new Error(l)}}return this.state.top=!0,t}inline(e,t=[]){return this.inlineQueue.push({src:e,tokens:t}),t}inlineTokens(e,t=[]){let s=e,r=null;if(this.tokens.links){let a=Object.keys(this.tokens.links);if(a.length>0)for(;(r=this.tokenizer.rules.inline.reflinkSearch.exec(s))!=null;)a.includes(r[0].slice(r[0].lastIndexOf("[")+1,-1))&&(s=s.slice(0,r.index)+"["+"a".repeat(r[0].length-2)+"]"+s.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex))}for(;(r=this.tokenizer.rules.inline.anyPunctuation.exec(s))!=null;)s=s.slice(0,r.index)+"++"+s.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);for(;(r=this.tokenizer.rules.inline.blockSkip.exec(s))!=null;)s=s.slice(0,r.index)+"["+"a".repeat(r[0].length-2)+"]"+s.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);let i=!1,l="";for(;e;){i||(l=""),i=!1;let a;if(this.options.extensions?.inline?.some(o=>(a=o.call({lexer:this},e,t))?(e=e.substring(a.raw.length),t.push(a),!0):!1))continue;if(a=this.tokenizer.escape(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.tag(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.link(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.reflink(e,this.tokens.links)){e=e.substring(a.raw.length);let o=t.at(-1);a.type==="text"&&o?.type==="text"?(o.raw+=a.raw,o.text+=a.text):t.push(a);continue}if(a=this.tokenizer.emStrong(e,s,l)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.codespan(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.br(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.del(e)){e=e.substring(a.raw.length),t.push(a);continue}if(a=this.tokenizer.autolink(e)){e=e.substring(a.raw.length),t.push(a);continue}if(!this.state.inLink&&(a=this.tokenizer.url(e))){e=e.substring(a.raw.length),t.push(a);continue}let c=e;if(this.options.extensions?.startInline){let o=1/0,h=e.slice(1),k;this.options.extensions.startInline.forEach(p=>{k=p.call({lexer:this},h),typeof k=="number"&&k>=0&&(o=Math.min(o,k))}),o<1/0&&o>=0&&(c=e.substring(0,o+1))}if(a=this.tokenizer.inlineText(c)){e=e.substring(a.raw.length),a.raw.slice(-1)!=="_"&&(l=a.raw.slice(-1)),i=!0;let o=t.at(-1);o?.type==="text"?(o.raw+=a.raw,o.text+=a.text):t.push(a);continue}if(e){let o="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(o);break}else throw new Error(o)}}return t}},L=class{options;parser;constructor(n){this.options=n||R}space(n){return""}code({text:n,lang:e,escaped:t}){let s=(e||"").match(x.notSpaceStart)?.[0],r=n.replace(x.endingNewline,"")+`
+`;return s?'<pre><code class="language-'+m(s)+'">'+(t?r:m(r,!0))+`</code></pre>
+`:"<pre><code>"+(t?r:m(r,!0))+`</code></pre>
+`}blockquote({tokens:n}){return`<blockquote>
+${this.parser.parse(n)}</blockquote>
+`}html({text:n}){return n}heading({tokens:n,depth:e}){return`<h${e}>${this.parser.parseInline(n)}</h${e}>
+`}hr(n){return`<hr>
+`}list(n){let e=n.ordered,t=n.start,s="";for(let l=0;l<n.items.length;l++){let a=n.items[l];s+=this.listitem(a)}let r=e?"ol":"ul",i=e&&t!==1?' start="'+t+'"':"";return"<"+r+i+`>
+`+s+"</"+r+`>
+`}listitem(n){let e="";if(n.task){let t=this.checkbox({checked:!!n.checked});n.loose?n.tokens[0]?.type==="paragraph"?(n.tokens[0].text=t+" "+n.tokens[0].text,n.tokens[0].tokens&&n.tokens[0].tokens.length>0&&n.tokens[0].tokens[0].type==="text"&&(n.tokens[0].tokens[0].text=t+" "+m(n.tokens[0].tokens[0].text),n.tokens[0].tokens[0].escaped=!0)):n.tokens.unshift({type:"text",raw:t+" ",text:t+" ",escaped:!0}):e+=t+" "}return e+=this.parser.parse(n.tokens,!!n.loose),`<li>${e}</li>
+`}checkbox({checked:n}){return"<input "+(n?'checked="" ':"")+'disabled="" type="checkbox">'}paragraph({tokens:n}){return`<p>${this.parser.parseInline(n)}</p>
+`}table(n){let e="",t="";for(let r=0;r<n.header.length;r++)t+=this.tablecell(n.header[r]);e+=this.tablerow({text:t});let s="";for(let r=0;r<n.rows.length;r++){let i=n.rows[r];t="";for(let l=0;l<i.length;l++)t+=this.tablecell(i[l]);s+=this.tablerow({text:t})}return s&&(s=`<tbody>${s}</tbody>`),`<table>
+<thead>
+`+e+`</thead>
+`+s+`</table>
+`}tablerow({text:n}){return`<tr>
+${n}</tr>
+`}tablecell(n){let e=this.parser.parseInline(n.tokens),t=n.header?"th":"td";return(n.align?`<${t} align="${n.align}">`:`<${t}>`)+e+`</${t}>
+`}strong({tokens:n}){return`<strong>${this.parser.parseInline(n)}</strong>`}em({tokens:n}){return`<em>${this.parser.parseInline(n)}</em>`}codespan({text:n}){return`<code>${m(n,!0)}</code>`}br(n){return"<br>"}del({tokens:n}){return`<del>${this.parser.parseInline(n)}</del>`}link({href:n,title:e,tokens:t}){let s=this.parser.parseInline(t),r=re(n);if(r===null)return s;n=r;let i='<a href="'+n+'"';return e&&(i+=' title="'+m(e)+'"'),i+=">"+s+"</a>",i}image({href:n,title:e,text:t,tokens:s}){s&&(t=this.parser.parseInline(s,this.parser.textRenderer));let r=re(n);if(r===null)return m(t);n=r;let i=`<img src="${n}" alt="${t}"`;return e&&(i+=` title="${m(e)}"`),i+=">",i}text(n){return"tokens"in n&&n.tokens?this.parser.parseInline(n.tokens):"escaped"in n&&n.escaped?n.text:m(n.text)}},Z=class{strong({text:n}){return n}em({text:n}){return n}codespan({text:n}){return n}del({text:n}){return n}html({text:n}){return n}text({text:n}){return n}link({text:n}){return""+n}image({text:n}){return""+n}br(){return""}},y=class j{options;renderer;textRenderer;constructor(e){this.options=e||R,this.options.renderer=this.options.renderer||new L,this.renderer=this.options.renderer,this.renderer.options=this.options,this.renderer.parser=this,this.textRenderer=new Z}static parse(e,t){return new j(t).parse(e)}static parseInline(e,t){return new j(t).parseInline(e)}parse(e,t=!0){let s="";for(let r=0;r<e.length;r++){let i=e[r];if(this.options.extensions?.renderers?.[i.type]){let a=i,c=this.options.extensions.renderers[a.type].call({parser:this},a);if(c!==!1||!["space","hr","heading","code","table","blockquote","list","html","paragraph","text"].includes(a.type)){s+=c||"";continue}}let l=i;switch(l.type){case"space":{s+=this.renderer.space(l);continue}case"hr":{s+=this.renderer.hr(l);continue}case"heading":{s+=this.renderer.heading(l);continue}case"code":{s+=this.renderer.code(l);continue}case"table":{s+=this.renderer.table(l);continue}case"blockquote":{s+=this.renderer.blockquote(l);continue}case"list":{s+=this.renderer.list(l);continue}case"html":{s+=this.renderer.html(l);continue}case"paragraph":{s+=this.renderer.paragraph(l);continue}case"text":{let a=l,c=this.renderer.text(a);for(;r+1<e.length&&e[r+1].type==="text";)a=e[++r],c+=`
+`+this.renderer.text(a);t?s+=this.renderer.paragraph({type:"paragraph",raw:c,text:c,tokens:[{type:"text",raw:c,text:c,escaped:!0}]}):s+=c;continue}default:{let a='Token with "'+l.type+'" type was not found.';if(this.options.silent)return console.error(a),"";throw new Error(a)}}}return s}parseInline(e,t=this.renderer){let s="";for(let r=0;r<e.length;r++){let i=e[r];if(this.options.extensions?.renderers?.[i.type]){let a=this.options.extensions.renderers[i.type].call({parser:this},i);if(a!==!1||!["escape","html","link","image","strong","em","codespan","br","del","text"].includes(i.type)){s+=a||"";continue}}let l=i;switch(l.type){case"escape":{s+=t.text(l);break}case"html":{s+=t.html(l);break}case"link":{s+=t.link(l);break}case"image":{s+=t.image(l);break}case"strong":{s+=t.strong(l);break}case"em":{s+=t.em(l);break}case"codespan":{s+=t.codespan(l);break}case"br":{s+=t.br(l);break}case"del":{s+=t.del(l);break}case"text":{s+=t.text(l);break}default:{let a='Token with "'+l.type+'" type was not found.';if(this.options.silent)return console.error(a),"";throw new Error(a)}}}return s}},_=class{options;block;constructor(n){this.options=n||R}static passThroughHooks=new Set(["preprocess","postprocess","processAllTokens"]);preprocess(n){return n}postprocess(n){return n}processAllTokens(n){return n}provideLexer(){return this.block?w.lex:w.lexInline}provideParser(){return this.block?y.parse:y.parseInline}},xe=class{defaults=B();options=this.setOptions;parse=this.parseMarkdown(!0);parseInline=this.parseMarkdown(!1);Parser=y;Renderer=L;TextRenderer=Z;Lexer=w;Tokenizer=A;Hooks=_;constructor(...n){this.use(...n)}walkTokens(n,e){let t=[];for(let s of n)switch(t=t.concat(e.call(this,s)),s.type){case"table":{let r=s;for(let i of r.header)t=t.concat(this.walkTokens(i.tokens,e));for(let i of r.rows)for(let l of i)t=t.concat(this.walkTokens(l.tokens,e));break}case"list":{let r=s;t=t.concat(this.walkTokens(r.items,e));break}default:{let r=s;this.defaults.extensions?.childTokens?.[r.type]?this.defaults.extensions.childTokens[r.type].forEach(i=>{let l=r[i].flat(1/0);t=t.concat(this.walkTokens(l,e))}):r.tokens&&(t=t.concat(this.walkTokens(r.tokens,e)))}}return t}use(...n){let e=this.defaults.extensions||{renderers:{},childTokens:{}};return n.forEach(t=>{let s={...t};if(s.async=this.defaults.async||s.async||!1,t.extensions&&(t.extensions.forEach(r=>{if(!r.name)throw new Error("extension name required");if("renderer"in r){let i=e.renderers[r.name];i?e.renderers[r.name]=function(...l){let a=r.renderer.apply(this,l);return a===!1&&(a=i.apply(this,l)),a}:e.renderers[r.name]=r.renderer}if("tokenizer"in r){if(!r.level||r.level!=="block"&&r.level!=="inline")throw new Error("extension level must be 'block' or 'inline'");let i=e[r.level];i?i.unshift(r.tokenizer):e[r.level]=[r.tokenizer],r.start&&(r.level==="block"?e.startBlock?e.startBlock.push(r.start):e.startBlock=[r.start]:r.level==="inline"&&(e.startInline?e.startInline.push(r.start):e.startInline=[r.start]))}"childTokens"in r&&r.childTokens&&(e.childTokens[r.name]=r.childTokens)}),s.extensions=e),t.renderer){let r=this.defaults.renderer||new L(this.defaults);for(let i in t.renderer){if(!(i in r))throw new Error(`renderer '${i}' does not exist`);if(["options","parser"].includes(i))continue;let l=i,a=t.renderer[l],c=r[l];r[l]=(...o)=>{let h=a.apply(r,o);return h===!1&&(h=c.apply(r,o)),h||""}}s.renderer=r}if(t.tokenizer){let r=this.defaults.tokenizer||new A(this.defaults);for(let i in t.tokenizer){if(!(i in r))throw new Error(`tokenizer '${i}' does not exist`);if(["options","rules","lexer"].includes(i))continue;let l=i,a=t.tokenizer[l],c=r[l];r[l]=(...o)=>{let h=a.apply(r,o);return h===!1&&(h=c.apply(r,o)),h}}s.tokenizer=r}if(t.hooks){let r=this.defaults.hooks||new _;for(let i in t.hooks){if(!(i in r))throw new Error(`hook '${i}' does not exist`);if(["options","block"].includes(i))continue;let l=i,a=t.hooks[l],c=r[l];_.passThroughHooks.has(i)?r[l]=o=>{if(this.defaults.async)return Promise.resolve(a.call(r,o)).then(k=>c.call(r,k));let h=a.call(r,o);return c.call(r,h)}:r[l]=(...o)=>{let h=a.apply(r,o);return h===!1&&(h=c.apply(r,o)),h}}s.hooks=r}if(t.walkTokens){let r=this.defaults.walkTokens,i=t.walkTokens;s.walkTokens=function(l){let a=[];return a.push(i.call(this,l)),r&&(a=a.concat(r.call(this,l))),a}}this.defaults={...this.defaults,...s}}),this}setOptions(n){return this.defaults={...this.defaults,...n},this}lexer(n,e){return w.lex(n,e??this.defaults)}parser(n,e){return y.parse(n,e??this.defaults)}parseMarkdown(n){return(t,s)=>{let r={...s},i={...this.defaults,...r},l=this.onError(!!i.silent,!!i.async);if(this.defaults.async===!0&&r.async===!1)return l(new Error("marked(): The async option was set to true by an extension. Remove async: false from the parse options object to return a Promise."));if(typeof t>"u"||t===null)return l(new Error("marked(): input parameter is undefined or null"));if(typeof t!="string")return l(new Error("marked(): input parameter is of type "+Object.prototype.toString.call(t)+", string expected"));i.hooks&&(i.hooks.options=i,i.hooks.block=n);let a=i.hooks?i.hooks.provideLexer():n?w.lex:w.lexInline,c=i.hooks?i.hooks.provideParser():n?y.parse:y.parseInline;if(i.async)return Promise.resolve(i.hooks?i.hooks.preprocess(t):t).then(o=>a(o,i)).then(o=>i.hooks?i.hooks.processAllTokens(o):o).then(o=>i.walkTokens?Promise.all(this.walkTokens(o,i.walkTokens)).then(()=>o):o).then(o=>c(o,i)).then(o=>i.hooks?i.hooks.postprocess(o):o).catch(l);try{i.hooks&&(t=i.hooks.preprocess(t));let o=a(t,i);i.hooks&&(o=i.hooks.processAllTokens(o)),i.walkTokens&&this.walkTokens(o,i.walkTokens);let h=c(o,i);return i.hooks&&(h=i.hooks.postprocess(h)),h}catch(o){return l(o)}}}onError(n,e){return t=>{if(t.message+=`
+Please report this to https://github.com/markedjs/marked.`,n){let s="<p>An error occurred:</p><pre>"+m(t.message+"",!0)+"</pre>";return e?Promise.resolve(s):s}if(e)return Promise.reject(t);throw t}}},S=new xe;function u(n,e){return S.parse(n,e)}u.options=u.setOptions=function(n){return S.setOptions(n),u.defaults=S.defaults,le(u.defaults),u};u.getDefaults=B;u.defaults=R;u.use=function(...n){return S.use(...n),u.defaults=S.defaults,le(u.defaults),u};u.walkTokens=function(n,e){return S.walkTokens(n,e)};u.parseInline=S.parseInline;u.Parser=y;u.parser=y.parse;u.Renderer=L;u.TextRenderer=Z;u.Lexer=w;u.lexer=w.lex;u.Tokenizer=A;u.Hooks=_;u.parse=u;var lt=u.options,at=u.setOptions,ot=u.use,ct=u.walkTokens,ht=u.parseInline,pt=u,ut=y.parse,gt=w.lex;return Te(ft);})();
+
+    const marked = PanoramaMarkdown.marked
 /* ── src/client/00-head.js ───────────────────────────────────────────── */
 /* ══════════════════════════════════════════════════════════════════════════
    dsh-panorama-mode · client half
@@ -641,6 +699,32 @@ const CSS = `
   opacity:0;transition:all .45s var(--ease);pointer-events:none}
 .dvs-toast.is-on{opacity:1;transform:translate(-50%,0)}
 
+/* Interactive result reading stays flat while the execution card continues. */
+.dvs-delivered,.dvs-ri{font-family:inherit;text-align:left;color:var(--ink);cursor:pointer}
+.dvs-delivery-files{display:flex;gap:8px;margin-top:8px;overflow:hidden}
+.dvs-delivery-files span{font:10px var(--mono);color:var(--ok);border:1px solid var(--line2);border-radius:5px;padding:3px 6px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dvs-delivered:hover,.dvs-ri:hover,.dvs-ri.is-selected{border-color:var(--a);background-color:rgba(70,230,180,.06)}
+.dvs-delivered:focus-visible,.dvs-ri:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+.dvs-reader{position:absolute;left:64px;top:136px;width:950px;height:810px;z-index:5;border:1px solid var(--line2);border-radius:26px;
+ background:linear-gradient(160deg,rgba(21,25,31,.96),rgba(8,11,16,.96));backdrop-filter:blur(28px);display:flex;flex-direction:column;overflow:hidden;animation:dvs-sheet-in .4s var(--ease)}
+.dvs-reader-head{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--line);font:12px var(--mono);letter-spacing:.15em;color:var(--ink3)}
+.dvs-reader-scroll{overflow:auto;flex:1;min-height:0;padding:28px 34px;scrollbar-color:rgba(255,255,255,.15) transparent}
+.dvs-result-title{font-size:25px;font-weight:450;margin-bottom:24px!important;color:var(--ink)}
+.dvs-markdown{font-size:17px;line-height:1.75;color:var(--ink2);overflow-wrap:anywhere}
+.dvs-markdown h1,.dvs-markdown h2,.dvs-markdown h3,.dvs-markdown h4{color:var(--ink);margin:20px 0 12px;font-weight:500;line-height:1.4}
+.dvs-markdown h1{font-size:27px}.dvs-markdown h2{font-size:23px}.dvs-markdown h3{font-size:20px}
+.dvs-markdown p,.dvs-markdown ul,.dvs-markdown ol,.dvs-markdown blockquote{margin:12px 0}.dvs-markdown ul,.dvs-markdown ol{padding-left:26px}
+.dvs-markdown pre{padding:18px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);overflow:auto;white-space:pre;font:14px/1.6 var(--mono);margin:16px 0}
+.dvs-markdown code{font:14px var(--mono);color:var(--b)}.dvs-markdown blockquote{padding-left:18px;border-left:2px solid var(--a)}
+.dvs-md-link{display:inline;background:none;border:0;border-bottom:1px dotted var(--a);color:var(--a);font:inherit;cursor:pointer;text-align:left}
+.dvs-table-wrap{overflow:auto}.dvs-markdown table{border-collapse:collapse;width:100%;font-size:15px}.dvs-markdown td,.dvs-markdown th{border:1px solid var(--line2);padding:10px;text-align:left}
+.dvs-reader-foot{padding:16px 28px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;color:var(--ink3);font:11px var(--mono)}
+.dvs-result-assets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.dvs-asset{border:1px solid var(--line2);border-radius:14px;padding:14px;background:rgba(255,255,255,.025);text-align:left;cursor:pointer;color:var(--ink2);min-width:0}
+.dvs-asset:hover{border-color:var(--a)}.dvs-asset span,.dvs-asset small{display:block;font:10px var(--mono);color:var(--ink3);margin-bottom:8px}
+.dvs-asset b{display:block;font-size:14px;font-weight:450;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:8px}
+.dvs-result-media{margin-top:20px}.dvs-result-media img,.dvs-result-media video{width:100%;max-height:430px;object-fit:contain;border-radius:12px;background:#000}
+.dvs-reader-error{color:#FF8A7A;margin-top:16px;font-size:13px}.dvs-media-placeholder{color:var(--ink3)}
 /* ── failure fallback ─────────────────────────────────────────────────── */
 .dvs-root.dvs-crash{display:grid;place-items:center;padding:24px}
 .dvs-crash-card{display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:560px;
@@ -1104,9 +1188,11 @@ function buildModel(input) {
   logs.sort((a,b)=>a.time-b.time)
   const prompt = current.filter(row=>row.kind==='user').at(-1) || records.filter(row=>row.kind==='user').at(-1)
   const title = clip(contentText(prompt?.data.content),110) || input.summary?.displayTitle || (turn?'Turn '+turn:'')
-  const recent = records.filter(row=>row.kind==='assistant-step' && row.data.status==='settled' && textOfBlocks(row.data.blocks))
-    .filter(row=>chat.timeline?.turns?.get(row.turn)?.status==='closed').slice(-MAX_RECENT).reverse()
-    .map(row=>({turn:row.turn,time:row.data.time,text:clip(textOfBlocks(row.data.blocks),96)}))
+  const byTurn = new Map()
+  for (const row of records.filter(row=>row.kind==='assistant-step' && row.data.status==='settled' && textOfBlocks(row.data.blocks))) {
+    if(chat.timeline?.turns?.get(row.turn)?.status==='closed')byTurn.set(row.turn,resultFor(row,chat.timeline?.turns?.get(row.turn)))
+  }
+  const recent = [...byTurn.values()].slice(-MAX_RECENT).reverse()
   const n = x=>Number.isFinite(x)?x:0
   const usage=input.usage
   const cache=n(usage?.cacheReadTokens), uncached=n(usage?.uncachedInputTokens)
@@ -1120,13 +1206,133 @@ function buildModel(input) {
     progressLabel:counts?'待办完成进度':input.chat?'执行活动（总量未知）':'会话数据尚未接入',phase:waiting?'等待确认':active.length?'工具执行':liveText?'生成回复':running?'思考中':display==='done'?'本轮完成':display==='error'?'已停止':'待命',
     elapsed,tokens,stats:{turns:n(input.stats?.turns),steps:n(input.stats?.steps),avgStepMs:0},todos:counts,recent,
     activityKey:turn+':'+(active[0]?.key || live?.key || display),
-    deliverable:display==='done' && finalText ? {text:clip(finalText,72),meta:calls.length+' 次工具调用 · '+fmtDuration(elapsed)}:null,
+    deliverable:display==='done' && finalText ? {...resultFor(settled,loc),meta:calls.length+' 次工具调用 · '+fmtDuration(elapsed)}:null,
     tools:[...new Set(calls.map(row=>row.name))].slice(-6),at:now,trackingAvailable:Boolean(input.chat)}
 }
 
 const EMPTY_MODEL = {sessionId:null,display:'idle',running:false,turn:0,title:'',workspace:'',modelName:'',steps:[],stepTotal:0,activeStep:null,
   logs:[],stream:[],speech:'',previewText:'',progress:0,indeterminate:false,elapsed:null,tokens:{total:0,output:0,cacheHit:null,input:0},
   stats:{turns:0,steps:0,avgStepMs:0},todos:null,recent:[],deliverable:null,tools:[],at:0,phase:'待命',progressLabel:'',activityKey:'idle'}
+
+/* ── src/client/35-results.js ───────────────────────────────────────────── */
+/* Result text is tokenized locally and rendered as React nodes: raw HTML is
+   never injected, file references are never converted into guessed URLs. */
+const fileOpeners = new Map()
+function safeTarget(value) {
+  if (typeof value !== 'string' || /[\u0000-\u001f]/.test(value)) return null
+  value=value.trim()
+  if (/^https?:\/\//i.test(value)) {
+    try { const url = new URL(value); return url.username || url.password ? null : {kind:'url',href:url.href} } catch { return null }
+  }
+  if (/^[a-z][a-z0-9+.-]*:/i.test(value) && !/^[a-z]:[\\/]/i.test(value)) return null
+  if (/^(#|\/\/)/.test(value) || !value.trim()) return null
+  return {kind:'file',href:value}
+}
+function mdTokens(text) { return marked.lexer(text || '') }
+function plainMarkdown(text) {
+  function plain(tokens) {
+    return tokens.map(token => token.type==='html' ? '' : token.tokens ? plain(token.tokens) : token.items ? token.items.map(x=>plain(x.tokens||[])).join(' ') : token.text || '').join(' ')
+  }
+  return plain(mdTokens(text)).replace(/\s+/g,' ').trim()
+}
+function resultResources(text) {
+  const out=[],seen=new Set()
+  function walk(tokens) {
+    for(const token of tokens) {
+      if (token.type==='link' || token.type==='image') {
+        const target=safeTarget(token.href)
+        if(target && !seen.has(target.href)) {
+          seen.add(target.href)
+          const ext=target.href.split(/[?#]/)[0].toLowerCase()
+          const kind=token.type==='image'||/\.(png|jpg|jpeg|webp|gif)$/.test(ext)?'image':/\.(mp4|webm|mov)$/.test(ext)?'video':target.kind==='file'?'document':'link'
+          out.push({...target,resourceKind:kind,title:token.text||target.href})
+        }
+      }
+      if(token.tokens)walk(token.tokens)
+      if(token.items)for(const item of token.items)walk(item.tokens||[])
+      if(token.header)for(const cell of token.header)walk(cell.tokens||[])
+      if(token.rows)for(const row of token.rows)for(const cell of row)walk(cell.tokens||[])
+    }
+  }
+  walk(mdTokens(text));return out
+}
+function resultFor(row, turnLocation) {
+  const markdown=textOfBlocks(row.data.blocks)
+  const resources=resultResources(markdown)
+  // These are DSH's published deliverables facts, not tool arguments or prose.
+  const declared=turnLocation?.data?.get?.('deliverables')?.presented || []
+  const presented=[]
+  for(const file of declared) {
+    const target=safeTarget(file.path)
+    if(!target || target.kind!=='file')continue
+    const ext=file.path.split('.').at(-1).toLowerCase()
+    const item={...target,title:basename(file.path),description:file.description||'',extension:ext,
+      resourceKind:['png','jpg','jpeg','webp','gif'].includes(ext)?'image':['mp4','webm','mov'].includes(ext)?'video':'document',
+      source:'presented',seq:file.seq,index:file.index}
+    const existing=resources.findIndex(x=>x.href===target.href)
+    if(existing>=0)resources.splice(existing,1)
+    if(!presented.some(x=>x.href===item.href))presented.push(item)
+  }
+  return {key:'turn:'+row.turn,turn:row.turn,time:row.data.time,markdown,
+    text:clip(plainMarkdown(markdown),96),resources:[...presented,...resources],presented}
+}
+function ResultMarkdown({text,onOpen}) {
+  function render(tokens) { return tokens.map((token,index)=>{
+    const key=index,children=()=>render(token.tokens||[])
+    switch(token.type) {
+      case 'heading':return h('h'+token.depth,{key},children())
+      case 'paragraph':return h('p',{key},children())
+      case 'text':return token.tokens?h(React.Fragment,{key},children()):token.text
+      case 'strong':return h('strong',{key},children())
+      case 'em':return h('em',{key},children())
+      case 'del':return h('del',{key},children())
+      case 'codespan':return h('code',{key},token.text)
+      case 'code':return h('pre',{key},h('code',null,token.text))
+      case 'blockquote':return h('blockquote',{key},children())
+      case 'list':return h(token.ordered?'ol':'ul',{key,start:token.ordered?token.start:undefined},token.items.map((item,i)=>h('li',{key:i},render(item.tokens||[]))))
+      case 'link': {
+        const target=safeTarget(token.href)
+        const ext=target?.href.split(/[?#]/)[0].toLowerCase() || ''
+        const resourceKind=/\.(mp4|webm|mov)$/.test(ext)?'video':/\.(png|jpg|jpeg|webp|gif)$/.test(ext)?'image':target?.kind==='file'?'document':'link'
+        return target?h('button',{key,type:'button',className:'dvs-md-link',onClick:()=>onOpen({...target,title:token.text,resourceKind})},children()):h('span',{key},children())
+      }
+      case 'image':return h('span',{key,className:'dvs-media-placeholder'},'▧ '+token.text)
+      case 'table':return h('div',{key,className:'dvs-table-wrap'},h('table',null,
+        h('thead',null,h('tr',null,token.header.map((cell,i)=>h('th',{key:i},render(cell.tokens||[]))))),
+        h('tbody',null,token.rows.map((row,i)=>h('tr',{key:i},row.map((cell,j)=>h('td',{key:j},render(cell.tokens||[]))))))))
+      case 'hr':return h('hr',{key})
+      case 'br':return h('br',{key})
+      case 'html':return h('code',{key},token.text)
+      default:return token.text || null
+    }
+  }) }
+  return h('div',{className:'dvs-markdown'},render(mdTokens(text)))
+}
+function ResultReader({result,sessionId,onClose,t}) {
+  const [media,setMedia]=useState(null),[error,setError]=useState(''),[copied,setCopied]=useState(false)
+  const open=resource=>{
+    setError('')
+    if(resource.kind==='file') {
+      const action=fileOpeners.get(sessionId+':'+result.turn)
+      if(!action){setError(t('fileUnavailable'));return}
+      try { action(resource.href) ; store.set({open:false}) } catch(e){setError(String(e.message||e))}
+    } else if(['image','video'].includes(resource.resourceKind))setMedia(resource)
+    else window.open(resource.href,'_blank','noopener,noreferrer')
+  }
+  return h('section',{className:'dvs-reader',role:'region','aria-label':t('resultReader')},
+    h('div',{className:'dvs-reader-head'},h('span',null,t('resultReader')+' · TURN '+result.turn),h('button',{type:'button',className:'dvs-ctl',onClick:onClose,'aria-label':t('closeResult')},IconClose())),
+    h('div',{className:'dvs-reader-scroll'},
+      h('h2',{className:'dvs-result-title'},result.text),
+      h(ResultMarkdown,{text:result.markdown,onOpen:open}),
+      result.resources.length?h('div',{className:'dvs-result-assets'},result.resources.map(resource=>h('button',{key:resource.href,type:'button',className:'dvs-asset',onClick:()=>open(resource)},h('span',null,(resource.extension || resource.resourceKind).toUpperCase()+' · '+(resource.source==='presented'?t('presentedFile'):t('fileReference'))),h('b',null,resource.title),h('small',null,resource.description || (resource.kind==='file'?resource.href:new URL(resource.href).hostname))))):null,
+      media?h('div',{className:'dvs-result-media'},media.resourceKind==='video'?h('video',{src:media.href,controls:true,preload:'none',onError:()=>setError(t('mediaError'))}):h('img',{src:media.href,alt:media.title,onError:()=>setError(t('mediaError'))})):null,
+      error?h('p',{role:'alert',className:'dvs-reader-error'},error):null),
+    h('div',{className:'dvs-reader-foot'},h('span',null,t('resultReferenceHint')),h('button',{type:'button',className:'dvs-opt',onClick:async()=>{try{await navigator.clipboard.writeText(result.markdown);setCopied(true)}catch{setError(t('copyError'))}}},copied?t('copied'):t('copyResult'))))
+}
+function ResultFileBridge({sessionId,turn,openFile}) {
+  useEffect(()=>{const key=sessionId+':'+turn.turn;fileOpeners.set(key,openFile);return()=>{if(fileOpeners.get(key)===openFile)fileOpeners.delete(key)}},[sessionId,turn.turn,openFile])
+  return null
+}
 
 /* ── src/client/40-panels.js ───────────────────────────────────────────── */
 /* ── glyphs ─────────────────────────────────────────────────────────────── */
@@ -1462,13 +1668,13 @@ function StageProgress(props) {
 }
 
 function StageDelivered(props) {
-  const { model } = props
+  const { model, onResult } = props
   const t = asT(props.t)
   const item = model.deliverable
   if (!item) return null
   return h(
-    'div',
-    { className: 'dvs-delivered' },
+    'button',
+    { type:'button',className: 'dvs-delivered',onClick:()=>onResult?.(item),'aria-label':t('viewResult')+': '+item.text },
     h(
       'div',
       { className: 'dvs-dv-ico' },
@@ -1478,13 +1684,14 @@ function StageDelivered(props) {
       'div',
       { className: 'dvs-dv-body' },
       h('div', { className: 'dvs-dv-t', title: item.text }, item.text),
-      h('div', { className: 'dvs-dv-m' }, item.meta || t('replyReady')),
+      h('div', { className: 'dvs-dv-m' }, [item.meta || t('replyReady'), (item.presented?.length || 0)+' '+t('fileCount'), (item.resources?.length || 0)+' '+t('resourceCount'),t('viewResult')+' →'].join(' · ')),
+      item.presented?.length ? h('div',{className:'dvs-delivery-files'},item.presented.map(file=>h('span',{key:file.href,title:file.description},file.title))) : null,
     ),
   )
 }
 
 function StageTaskCard(props) {
-  const { model, out } = props
+  const { model, out, onResult } = props
   const t = asT(props.t)
   const done = model.display === 'done'
   const tag = model.activeStep && model.running ? model.activeStep.name : done ? t('tagDelivered') : t('tagReasoning')
@@ -1522,12 +1729,12 @@ function StageTaskCard(props) {
     ),
     h(StageLog, { model }),
     done ? null : h(StageProgress, { model, t }),
-    done ? h(StageDelivered, { model, t }) : null,
+    done ? h(StageDelivered, { model, t, onResult }) : null,
   )
 }
 
 function StageRecent(props) {
-  const { model } = props
+  const { model, onResult, selectedKey } = props
   const t = asT(props.t)
   const rows = model ? model.recent : []
   return h(
@@ -1546,8 +1753,8 @@ function StageRecent(props) {
           { className: 'dvs-rlist' },
           rows.map((row, index) =>
             h(
-              'div',
-              { className: 'dvs-ri', key: row.time + ':' + index, title: row.text },
+              'button',
+              { type:'button',className: 'dvs-ri' + (selectedKey===row.key?' is-selected':''), key: row.key, title: row.text,onClick:()=>onResult?.(row),'aria-label':t('viewResult')+': '+row.text },
               h(
                 'div',
                 { className: 'dvs-ri-th' },
@@ -1795,6 +2002,7 @@ function StageShell(props) {
   const frameRef = useRef(null)
   const tiltRef = useRef(null)
   const [sheet, setSheet] = useState(false)
+  const [selectedResult, setSelectedResult] = useState(null)
   const [toast, setToast] = useState('')
   const toastTimer = useRef(0)
   const { settings, apply, reset } = useStageSettings()
@@ -1861,6 +2069,7 @@ function StageShell(props) {
           return
         }
         event.stopPropagation()
+        if(selectedResult){setSelectedResult(null);return}
         onClose()
         return
       }
@@ -1873,7 +2082,7 @@ function StageShell(props) {
     }
     window.addEventListener('keydown', onKeyDown, true)
     return () => window.removeEventListener('keydown', onKeyDown, true)
-  }, [sheet, onClose])
+  }, [sheet, selectedResult, onClose])
 
   /* pointer parallax + auto-hidden cursor (scoped to the stage) */
   useEffect(() => {
@@ -1955,7 +2164,7 @@ function StageShell(props) {
         onClose,
         t,
       }),
-      h(StageOrbColumn, { model: view, settings, t }),
+      selectedResult ? h(ResultReader,{key:selectedResult.key,result:selectedResult,sessionId:view.sessionId,onClose:()=>setSelectedResult(null),t}) : h(StageOrbColumn, { model: view, settings, t }),
       h(
         'section',
         { className: 'dvs-panel' },
@@ -1965,10 +2174,10 @@ function StageShell(props) {
           { className: 'dvs-stage3d' },
           h('div', { className: 'dvs-tilt', ref: tiltRef }, [
             h(StageIdleCard, { key: 'idle', model: view, settings, t, out: taskVisible }),
-            h(StageTaskCard, { key: 'task', model: view, t, out: !taskVisible }),
+            h(StageTaskCard, { key: 'task', model: view, t, out: !taskVisible,onResult:setSelectedResult }),
           ]),
         ),
-        settings.showRecent ? h(StageRecent, { model: view, t }) : null,
+        settings.showRecent ? h(StageRecent, { model: view, t,onResult:setSelectedResult,selectedKey:selectedResult?.key }) : null,
       ),
       h(
         'footer',
@@ -2044,7 +2253,12 @@ const EN = {
   stepsWord: ' steps',
   running: 'running',
   replyReady: 'Reply ready',
-  recent: 'Recent replies',
+  presentedFile:'Presented file', fileCount:'files',
+  resourceCount:'references',
+  viewResult:'View result', resultReader:'Result',closeResult:'Close result',copyResult:'Copy Markdown',copied:'Copied',copyError:'Copy unavailable',
+  fileUnavailable:'The native file opener is not mounted. Return to Chat and open this reference there.',
+  fileReference:'File reference in reply',resultReferenceHint:'References do not prove files were generated or uploaded.',mediaError:'Media could not be loaded.',
+  recent: 'Recent results',
   today: 'today',
   recentEmpty: 'Nothing delivered in this window yet.',
   stream: 'Session stream',
@@ -2106,7 +2320,12 @@ const ZH = {
   stepsWord: ' 步',
   running: '进行中',
   replyReady: '回复已就绪',
-  recent: '最近回复',
+  presentedFile:'正式交付文件', fileCount:'个文件',
+  resourceCount:'个引用',
+  viewResult:'查看结果', resultReader:'输出结果',closeResult:'关闭结果',copyResult:'复制 Markdown',copied:'已复制',copyError:'无法复制，请检查剪贴板权限',
+  fileUnavailable:'原生文件打开入口尚未挂载，请返回对话中打开该文件引用。',
+  fileReference:'回复中的文件引用',resultReferenceHint:'文件引用不代表文件已生成或上传。',mediaError:'媒体加载失败。',
+  recent: '最近结果',
   today: '今日',
   recentEmpty: '当前窗口内还没有完成回复。',
   stream: '会话流',
@@ -2287,6 +2506,10 @@ function apply(ctx) {
     ),
   )
 
+  ctx.slots.inject('conversation.chat.turnTail', () => ctx.slots.register({
+    name:'conversation.chat.turnTail',id:'panorama-mode.file-opener',locale:'avaStage',
+  },ResultFileBridge))
+
   ctx.slots.inject('shell.overlay', () =>
     ctx.slots.register(
       {
@@ -2304,6 +2527,7 @@ function apply(ctx) {
 if (typeof window !== 'undefined' && window.__AVA_STAGE_TEST__ === true) {
   window.__AVA_STAGE_TEST_API = {
     buildModel,
+    safeTarget, plainMarkdown, resultResources, ResultMarkdown, ResultReader,
     EMPTY_MODEL,
     store,
     resolveSettings,

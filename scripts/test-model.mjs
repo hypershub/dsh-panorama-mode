@@ -271,4 +271,35 @@ assert.ok(brandedHeader.includes('星辰 Studio'),'custom brand appears in the h
 const {normalizeConfig} = await import('../index.js')
 assert.equal(normalizeConfig({brandName:'  星辰  Studio  '}).brandName,'星辰 Studio')
 assert.equal(normalizeConfig({brandName:'   '}).brandName,'Hypers Work')
+for(const bad of ['javascript:alert(1)','data:text/html,x','//example.com','https://user:password@example.com'])assert.equal(stageApi.safeTarget(bad),null)
+assert.equal(stageApi.plainMarkdown('## Done **now** [site](https://example.com)'),'Done now site')
+const mixed='## Result\n\nHello **world**.\n\n[Video](https://example.com/a.mp4) [Report](./report.pdf) ![Image](https://example.com/a.png)\n\n<script>alert(1)</script>'
+assert.deepEqual(stageApi.resultResources(mixed).map(x=>x.resourceKind),['video','document','image'])
+const renderedResult=renderToStaticMarkup(React.createElement(stageApi.ResultMarkdown,{text:mixed,onOpen:noop}))
+assert.ok(renderedResult.includes('<strong>world</strong>'))
+assert.ok(!renderedResult.includes('<script>'))
+assert.ok(!renderedResult.includes('<img'),'media cannot load until user clicks')
+const twoReplies=buildModel({...base,running:false,chat:chatOf([wrapper('early','assistant-step',asst('settled','Earlier update')),wrapper('final','assistant-step',asst('settled',mixed))],'closed')})
+assert.equal(twoReplies.recent.length,1,'one final result per turn')
+assert.equal(twoReplies.recent[0].markdown,mixed)
+const readerHtml=renderToStaticMarkup(React.createElement(stageApi.ResultReader,{result:twoReplies.recent[0],sessionId:'s1',onClose:noop,t}))
+assert.ok(readerHtml.includes('dvs-reader'));assert.ok(readerHtml.includes('report.pdf'));assert.ok(!readerHtml.includes('<video'))
+assert.equal(stageApi.safeTarget(' javascript:alert(1)'),null)
+let clickedResult=null
+const clickable=stageApi.StageDelivered({model:twoReplies,t,onResult:item=>{clickedResult=item}})
+assert.equal(clickable.type,'button')
+clickable.props.onClick()
+assert.equal(clickedResult.markdown,mixed,'completion card opens its full result rather than clipped summary')
+const fileChat=chatOf([wrapper('answer','assistant-step',asst('settled','The deck is ready.'))],'closed')
+fileChat.timeline.turns.get(3).data={get:key=>key==='deliverables'?{presented:[
+ {path:'/work/deck.pptx',description:'Exported deck',seq:40,index:0},
+ {path:'/work/deck.univer',description:'Editable source',seq:40,index:1},
+ {path:'/work/contact.png',description:'Preview',seq:40,index:2}]}:undefined}
+const withFiles=buildModel({...base,running:false,chat:fileChat})
+assert.deepEqual(withFiles.deliverable.presented.map(x=>x.extension),['pptx','univer','png'])
+assert.equal(withFiles.deliverable.resources.length,3,'present files appear even when absent from reply Markdown')
+assert.equal(withFiles.recent[0].presented.length,3,'historical result retains presented files')
+const fileReader=renderToStaticMarkup(React.createElement(stageApi.ResultReader,{result:withFiles.deliverable,sessionId:'s1',onClose:noop,t}))
+for(const name of ['deck.pptx','deck.univer','contact.png'])assert.ok(fileReader.includes(name))
+assert.ok(!fileReader.includes('<img'),'local image does not bypass the native file opener')
 console.log('panorama-mode model/render test passed')

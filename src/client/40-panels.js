@@ -331,13 +331,13 @@ function StageProgress(props) {
 }
 
 function StageDelivered(props) {
-  const { model } = props
+  const { model, onResult } = props
   const t = asT(props.t)
   const item = model.deliverable
   if (!item) return null
   return h(
-    'div',
-    { className: 'dvs-delivered' },
+    'button',
+    { type:'button',className: 'dvs-delivered',onClick:()=>onResult?.(item),'aria-label':t('viewResult')+': '+item.text },
     h(
       'div',
       { className: 'dvs-dv-ico' },
@@ -347,13 +347,14 @@ function StageDelivered(props) {
       'div',
       { className: 'dvs-dv-body' },
       h('div', { className: 'dvs-dv-t', title: item.text }, item.text),
-      h('div', { className: 'dvs-dv-m' }, item.meta || t('replyReady')),
+      h('div', { className: 'dvs-dv-m' }, [item.meta || t('replyReady'), (item.presented?.length || 0)+' '+t('fileCount'), (item.resources?.length || 0)+' '+t('resourceCount'),t('viewResult')+' →'].join(' · ')),
+      item.presented?.length ? h('div',{className:'dvs-delivery-files'},item.presented.map(file=>h('span',{key:file.href,title:file.description},file.title))) : null,
     ),
   )
 }
 
 function StageTaskCard(props) {
-  const { model, out } = props
+  const { model, out, onResult } = props
   const t = asT(props.t)
   const done = model.display === 'done'
   const tag = model.activeStep && model.running ? model.activeStep.name : done ? t('tagDelivered') : t('tagReasoning')
@@ -391,12 +392,12 @@ function StageTaskCard(props) {
     ),
     h(StageLog, { model }),
     done ? null : h(StageProgress, { model, t }),
-    done ? h(StageDelivered, { model, t }) : null,
+    done ? h(StageDelivered, { model, t, onResult }) : null,
   )
 }
 
 function StageRecent(props) {
-  const { model } = props
+  const { model, onResult, selectedKey } = props
   const t = asT(props.t)
   const rows = model ? model.recent : []
   return h(
@@ -415,8 +416,8 @@ function StageRecent(props) {
           { className: 'dvs-rlist' },
           rows.map((row, index) =>
             h(
-              'div',
-              { className: 'dvs-ri', key: row.time + ':' + index, title: row.text },
+              'button',
+              { type:'button',className: 'dvs-ri' + (selectedKey===row.key?' is-selected':''), key: row.key, title: row.text,onClick:()=>onResult?.(row),'aria-label':t('viewResult')+': '+row.text },
               h(
                 'div',
                 { className: 'dvs-ri-th' },

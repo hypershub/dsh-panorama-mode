@@ -336,6 +336,32 @@ const CSS = `
   opacity:0;transition:all .45s var(--ease);pointer-events:none}
 .dvs-toast.is-on{opacity:1;transform:translate(-50%,0)}
 
+/* Interactive result reading stays flat while the execution card continues. */
+.dvs-delivered,.dvs-ri{font-family:inherit;text-align:left;color:var(--ink);cursor:pointer}
+.dvs-delivery-files{display:flex;gap:8px;margin-top:8px;overflow:hidden}
+.dvs-delivery-files span{font:10px var(--mono);color:var(--ok);border:1px solid var(--line2);border-radius:5px;padding:3px 6px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dvs-delivered:hover,.dvs-ri:hover,.dvs-ri.is-selected{border-color:var(--a);background-color:rgba(70,230,180,.06)}
+.dvs-delivered:focus-visible,.dvs-ri:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+.dvs-reader{position:absolute;left:64px;top:136px;width:950px;height:810px;z-index:5;border:1px solid var(--line2);border-radius:26px;
+ background:linear-gradient(160deg,rgba(21,25,31,.96),rgba(8,11,16,.96));backdrop-filter:blur(28px);display:flex;flex-direction:column;overflow:hidden;animation:dvs-sheet-in .4s var(--ease)}
+.dvs-reader-head{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--line);font:12px var(--mono);letter-spacing:.15em;color:var(--ink3)}
+.dvs-reader-scroll{overflow:auto;flex:1;min-height:0;padding:28px 34px;scrollbar-color:rgba(255,255,255,.15) transparent}
+.dvs-result-title{font-size:25px;font-weight:450;margin-bottom:24px!important;color:var(--ink)}
+.dvs-markdown{font-size:17px;line-height:1.75;color:var(--ink2);overflow-wrap:anywhere}
+.dvs-markdown h1,.dvs-markdown h2,.dvs-markdown h3,.dvs-markdown h4{color:var(--ink);margin:20px 0 12px;font-weight:500;line-height:1.4}
+.dvs-markdown h1{font-size:27px}.dvs-markdown h2{font-size:23px}.dvs-markdown h3{font-size:20px}
+.dvs-markdown p,.dvs-markdown ul,.dvs-markdown ol,.dvs-markdown blockquote{margin:12px 0}.dvs-markdown ul,.dvs-markdown ol{padding-left:26px}
+.dvs-markdown pre{padding:18px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);overflow:auto;white-space:pre;font:14px/1.6 var(--mono);margin:16px 0}
+.dvs-markdown code{font:14px var(--mono);color:var(--b)}.dvs-markdown blockquote{padding-left:18px;border-left:2px solid var(--a)}
+.dvs-md-link{display:inline;background:none;border:0;border-bottom:1px dotted var(--a);color:var(--a);font:inherit;cursor:pointer;text-align:left}
+.dvs-table-wrap{overflow:auto}.dvs-markdown table{border-collapse:collapse;width:100%;font-size:15px}.dvs-markdown td,.dvs-markdown th{border:1px solid var(--line2);padding:10px;text-align:left}
+.dvs-reader-foot{padding:16px 28px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;color:var(--ink3);font:11px var(--mono)}
+.dvs-result-assets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.dvs-asset{border:1px solid var(--line2);border-radius:14px;padding:14px;background:rgba(255,255,255,.025);text-align:left;cursor:pointer;color:var(--ink2);min-width:0}
+.dvs-asset:hover{border-color:var(--a)}.dvs-asset span,.dvs-asset small{display:block;font:10px var(--mono);color:var(--ink3);margin-bottom:8px}
+.dvs-asset b{display:block;font-size:14px;font-weight:450;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:8px}
+.dvs-result-media{margin-top:20px}.dvs-result-media img,.dvs-result-media video{width:100%;max-height:430px;object-fit:contain;border-radius:12px;background:#000}
+.dvs-reader-error{color:#FF8A7A;margin-top:16px;font-size:13px}.dvs-media-placeholder{color:var(--ink3)}
 /* ── failure fallback ─────────────────────────────────────────────────── */
 .dvs-root.dvs-crash{display:grid;place-items:center;padding:24px}
 .dvs-crash-card{display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:560px;

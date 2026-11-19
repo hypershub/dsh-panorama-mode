@@ -12,6 +12,12 @@ Panorama adds a button to the conversation header. Open it to follow reasoning, 
 
 *Screenshot of the user-supplied HTML visual reference, not a capture of the installed plugin. Task names, file previews, percentages and ETA in this demo are illustrative; Panorama uses the actual conversation and the progress rules below. Current controls, branding and labels may differ.*
 
+## Interactive results
+
+Click the completed card or a recent result to replace the left orb with a flat glass reading panel. The execution panel stays visible. Replies render as Markdown headings, lists, code and tables; cards use clean text summaries. Recent results retain only the last settled reply per closed turn. Esc closes the result panel first.
+
+Web links open only on click in a new window. Image/video references load only after selecting their resource card; video never autoplays. Local document/media references use the native Chat turn-tail's Session file-opening callback; if it is not mounted, an explicit message asks the user to return to Chat. No file URL is guessed. Results merge reply references with DSH turn-level `deliverables.presented` files. PPTX, Univer, PNG and other presented files appear with names and descriptions even when absent from the reply. Presented files are distinguished from prose references; neither implies cloud upload/publication. Embedded document previews remain future work.
+
 ## Features
 
 - Live reasoning and response text from the current conversation.

@@ -59,7 +59,12 @@ const EN = {
   stepsWord: ' steps',
   running: 'running',
   replyReady: 'Reply ready',
-  recent: 'Recent replies',
+  presentedFile:'Presented file', fileCount:'files',
+  resourceCount:'references',
+  viewResult:'View result', resultReader:'Result',closeResult:'Close result',copyResult:'Copy Markdown',copied:'Copied',copyError:'Copy unavailable',
+  fileUnavailable:'The native file opener is not mounted. Return to Chat and open this reference there.',
+  fileReference:'File reference in reply',resultReferenceHint:'References do not prove files were generated or uploaded.',mediaError:'Media could not be loaded.',
+  recent: 'Recent results',
   today: 'today',
   recentEmpty: 'Nothing delivered in this window yet.',
   stream: 'Session stream',
@@ -121,7 +126,12 @@ const ZH = {
   stepsWord: ' 步',
   running: '进行中',
   replyReady: '回复已就绪',
-  recent: '最近回复',
+  presentedFile:'正式交付文件', fileCount:'个文件',
+  resourceCount:'个引用',
+  viewResult:'查看结果', resultReader:'输出结果',closeResult:'关闭结果',copyResult:'复制 Markdown',copied:'已复制',copyError:'无法复制，请检查剪贴板权限',
+  fileUnavailable:'原生文件打开入口尚未挂载，请返回对话中打开该文件引用。',
+  fileReference:'回复中的文件引用',resultReferenceHint:'文件引用不代表文件已生成或上传。',mediaError:'媒体加载失败。',
+  recent: '最近结果',
   today: '今日',
   recentEmpty: '当前窗口内还没有完成回复。',
   stream: '会话流',
@@ -302,6 +312,10 @@ function apply(ctx) {
     ),
   )
 
+  ctx.slots.inject('conversation.chat.turnTail', () => ctx.slots.register({
+    name:'conversation.chat.turnTail',id:'panorama-mode.file-opener',locale:'avaStage',
+  },ResultFileBridge))
+
   ctx.slots.inject('shell.overlay', () =>
     ctx.slots.register(
       {
@@ -319,6 +333,7 @@ function apply(ctx) {
 if (typeof window !== 'undefined' && window.__AVA_STAGE_TEST__ === true) {
   window.__AVA_STAGE_TEST_API = {
     buildModel,
+    safeTarget, plainMarkdown, resultResources, ResultMarkdown, ResultReader,
     EMPTY_MODEL,
     store,
     resolveSettings,

@@ -78,9 +78,11 @@ function buildModel(input) {
   logs.sort((a,b)=>a.time-b.time)
   const prompt = current.filter(row=>row.kind==='user').at(-1) || records.filter(row=>row.kind==='user').at(-1)
   const title = clip(contentText(prompt?.data.content),110) || input.summary?.displayTitle || (turn?'Turn '+turn:'')
-  const recent = records.filter(row=>row.kind==='assistant-step' && row.data.status==='settled' && textOfBlocks(row.data.blocks))
-    .filter(row=>chat.timeline?.turns?.get(row.turn)?.status==='closed').slice(-MAX_RECENT).reverse()
-    .map(row=>({turn:row.turn,time:row.data.time,text:clip(textOfBlocks(row.data.blocks),96)}))
+  const byTurn = new Map()
+  for (const row of records.filter(row=>row.kind==='assistant-step' && row.data.status==='settled' && textOfBlocks(row.data.blocks))) {
+    if(chat.timeline?.turns?.get(row.turn)?.status==='closed')byTurn.set(row.turn,resultFor(row,chat.timeline?.turns?.get(row.turn)))
+  }
+  const recent = [...byTurn.values()].slice(-MAX_RECENT).reverse()
   const n = x=>Number.isFinite(x)?x:0
   const usage=input.usage
   const cache=n(usage?.cacheReadTokens), uncached=n(usage?.uncachedInputTokens)
@@ -94,7 +96,7 @@ function buildModel(input) {
     progressLabel:counts?'待办完成进度':input.chat?'执行活动（总量未知）':'会话数据尚未接入',phase:waiting?'等待确认':active.length?'工具执行':liveText?'生成回复':running?'思考中':display==='done'?'本轮完成':display==='error'?'已停止':'待命',
     elapsed,tokens,stats:{turns:n(input.stats?.turns),steps:n(input.stats?.steps),avgStepMs:0},todos:counts,recent,
     activityKey:turn+':'+(active[0]?.key || live?.key || display),
-    deliverable:display==='done' && finalText ? {text:clip(finalText,72),meta:calls.length+' 次工具调用 · '+fmtDuration(elapsed)}:null,
+    deliverable:display==='done' && finalText ? {...resultFor(settled,loc),meta:calls.length+' 次工具调用 · '+fmtDuration(elapsed)}:null,
     tools:[...new Set(calls.map(row=>row.name))].slice(-6),at:now,trackingAvailable:Boolean(input.chat)}
 }
 

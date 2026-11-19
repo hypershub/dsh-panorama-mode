@@ -41,6 +41,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
+## Marked
+
+Marked 15.0.12 is bundled into the browser artifact for local Markdown tokenization. The tokenizer never supplies HTML to `dangerouslySetInnerHTML`; presentation renders tokens as React elements and filters link schemes. Its full distributed license, including Markdown attribution, is retained in `licenses/marked-LICENSE.md`.
+
+esbuild is a development-only bundler; it is not included in the runtime artifact.
+
 ## React
 
 React and React DOM 18.3.1 are MIT-licensed development dependencies used for tests. They are not bundled into `client.js`: the plugin uses the Harness runtime's React instance. Dependency license files are supplied in their installed npm packages.

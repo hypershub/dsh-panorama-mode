@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2 — 2026-11-19
+
+- Click completed/recent result cards to open a flat glass reading panel on the left while execution information remains visible.
+- Render complete Markdown as React elements; clean card summaries and keep the last settled reply per turn.
+- Merge DSH `deliverables.presented` files with reply links, including PPTX, Univer and PNG absent from reply text; distinguish presented files from prose references.
+- Open local files with the native Session file-opening callback when mounted, with an explicit fallback message otherwise.
+- Load images/videos only after a user gesture; never autoplay video or accept unsafe link schemes.
+- Preserve bundled Marked license and add result/card/attachment regression coverage.
+- Live browser media and native-file interaction acceptance remains separate from fixture/SSR tests.
+
 ## 0.1.1 — 2026-11-19
 
 - Add GitHub Actions `publish.yml` using npm OIDC trusted publishing and provenance, without npm token secrets.

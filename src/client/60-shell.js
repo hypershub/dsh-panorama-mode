@@ -68,6 +68,7 @@ function StageShell(props) {
   const frameRef = useRef(null)
   const tiltRef = useRef(null)
   const [sheet, setSheet] = useState(false)
+  const [selectedResult, setSelectedResult] = useState(null)
   const [toast, setToast] = useState('')
   const toastTimer = useRef(0)
   const { settings, apply, reset } = useStageSettings()
@@ -134,6 +135,7 @@ function StageShell(props) {
           return
         }
         event.stopPropagation()
+        if(selectedResult){setSelectedResult(null);return}
         onClose()
         return
       }
@@ -146,7 +148,7 @@ function StageShell(props) {
     }
     window.addEventListener('keydown', onKeyDown, true)
     return () => window.removeEventListener('keydown', onKeyDown, true)
-  }, [sheet, onClose])
+  }, [sheet, selectedResult, onClose])
 
   /* pointer parallax + auto-hidden cursor (scoped to the stage) */
   useEffect(() => {
@@ -228,7 +230,7 @@ function StageShell(props) {
         onClose,
         t,
       }),
-      h(StageOrbColumn, { model: view, settings, t }),
+      selectedResult ? h(ResultReader,{key:selectedResult.key,result:selectedResult,sessionId:view.sessionId,onClose:()=>setSelectedResult(null),t}) : h(StageOrbColumn, { model: view, settings, t }),
       h(
         'section',
         { className: 'dvs-panel' },
@@ -238,10 +240,10 @@ function StageShell(props) {
           { className: 'dvs-stage3d' },
           h('div', { className: 'dvs-tilt', ref: tiltRef }, [
             h(StageIdleCard, { key: 'idle', model: view, settings, t, out: taskVisible }),
-            h(StageTaskCard, { key: 'task', model: view, t, out: !taskVisible }),
+            h(StageTaskCard, { key: 'task', model: view, t, out: !taskVisible,onResult:setSelectedResult }),
           ]),
         ),
-        settings.showRecent ? h(StageRecent, { model: view, t }) : null,
+        settings.showRecent ? h(StageRecent, { model: view, t,onResult:setSelectedResult,selectedKey:selectedResult?.key }) : null,
       ),
       h(
         'footer',
