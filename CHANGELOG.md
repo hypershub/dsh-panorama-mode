@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — 2026-11-19
+
+- Add GitHub Actions `publish.yml` using npm OIDC trusted publishing and provenance, without npm token secrets.
+- Run identity checks, clean dependency installation, build, tests and artifact consistency before publication.
+- Trigger only from stable version tags or explicit manual runs on main; serialize releases without cancelling in-flight publication.
+- Document publisher setup and release operation. No visual runtime changes.
+
 ## 0.1.0 — 2026-11-19
 
 Initial repository release / 首次仓库版本。

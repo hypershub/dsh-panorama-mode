@@ -1,6 +1,6 @@
 # Panorama mode
 
-[简体中文](README.zh-CN.md) · [Configuration](docs/configuration.md) · [Development](docs/development.md) · [Changelog](CHANGELOG.md)
+[简体中文](README.zh-CN.md) · [Configuration](docs/configuration.md) · [Development](docs/development.md) · [Publishing](docs/publishing.md) · [Changelog](CHANGELOG.md)
 
 **A live, cinematic view of AI execution inside DeepSeek Harness / Hypers Work.**
 

@@ -1,6 +1,6 @@
 # 全景模式 · Panorama mode
 
-[English](README.md) · [配置说明](docs/configuration.md) · [开发与验证](docs/development.md) · [更新记录](CHANGELOG.md)
+[English](README.md) · [配置说明](docs/configuration.md) · [开发与验证](docs/development.md) · [可信发布](docs/publishing.md) · [更新记录](CHANGELOG.md)
 
 **在 DeepSeek Harness / Hypers Work 中，实时观看 AI 的执行过程。**
 

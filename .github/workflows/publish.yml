@@ -1,0 +1,67 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Exact package.json version to publish (no v prefix)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'hypershub/dsh-panorama-mode' && (github.event_name == 'push' || github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.6.2 --ignore-scripts
+      - name: Check release identity
+        env:
+          EXPECTED_VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const expected = process.env.GITHUB_EVENT_NAME === 'push'
+            ? process.env.GITHUB_REF_NAME.replace(/^v/, '') : process.env.EXPECTED_VERSION;
+          if (pkg.name !== '@hypershub/dsh-panorama-mode' || pkg.version !== expected || !/^\d+\.\d+\.\d+$/.test(expected)) {
+            throw new Error('Package identity/version does not match the requested stable release');
+          }
+          JS
+      - name: Install test dependencies
+        run: npm ci --ignore-scripts
+      - name: Build and test
+        run: |
+          npm run build
+          npm test
+          git diff --exit-code -- client.js
+      - name: Check package contents
+        run: npm pack --dry-run
+      - name: Publish with npm trusted publishing
+        run: npm publish --access public --provenance --registry=https://registry.npmjs.org
+      - name: Verify published metadata
+        run: |
+          version=$(node -p 'JSON.parse(require("fs").readFileSync("package.json", "utf8")).version')
+          npm view "@hypershub/dsh-panorama-mode@$version" version dist.integrity dist.attestations --json --registry=https://registry.npmjs.org
