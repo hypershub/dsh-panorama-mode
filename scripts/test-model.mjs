@@ -47,7 +47,7 @@ globalThis.window.__ModuleLoader__ = { load: definition => { registered = defini
 const source = await readFile(path.join(root, 'client.js'), 'utf8')
 new Function('window', 'document', source)(globalThis.window, globalThis.document)
 assert.ok(registered, 'client bundle did not register a factory')
-assert.equal(registered.id, 'dsh-panorama-mode')
+assert.equal(registered.id, '@hypershub/dsh-panorama-mode')
 
 const api = registered.factory(name => {
   if (name === 'react') return React

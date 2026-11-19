@@ -1,5 +1,5 @@
 {
-  "name": "dsh-panorama-mode",
+  "name": "@hypershub/dsh-panorama-mode",
   "version": "0.1.0",
   "description": "Panorama mode for live AI reasoning, tool execution and task progress, with automatic themes and a configurable callsign.",
   "keywords": [
@@ -13,10 +13,10 @@
   ],
   "license": "MIT",
   "author": "Hypers Work",
-  "homepage": "https://github.com/simonguo/dsh-panorama-mode",
+  "homepage": "https://github.com/hypershub/dsh-panorama-mode#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simonguo/dsh-panorama-mode.git"
+    "url": "git+https://github.com/hypershub/dsh-panorama-mode.git"
   },
   "type": "module",
   "main": "./index.js",
@@ -62,5 +62,9 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

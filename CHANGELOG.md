@@ -4,7 +4,8 @@
 
 Initial repository release / 首次仓库版本。
 
-- Independent Cordis bundle named `dsh-panorama-mode`; display name 全景模式 / Panorama mode.
+- Independent Cordis bundle named `@hypershub/dsh-panorama-mode`; repository transferred to `hypershub/dsh-panorama-mode`; display name 全景模式 / Panorama mode.
+- Local folder stays `dsh-panorama-mode`; older unscoped development installs must be removed before installing the scoped bundle to avoid duplicate entries. Local appearance storage remains compatible.
 - Live current-turn reasoning, tool execution, nested calls, reply preview and settled token accounting.
 - Real todo completion progress; indeterminate activity when no current-turn plan is available.
 - Distinct completion, waiting, error and interruption states.

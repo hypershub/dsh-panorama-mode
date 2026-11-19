@@ -28,7 +28,7 @@
 仓库已包含构建后的 `client.js`，安装不需要执行构建脚本。
 
 ```sh
-git clone https://github.com/simonguo/dsh-panorama-mode.git
+git clone https://github.com/hypershub/dsh-panorama-mode.git
 ```
 
 在 Harness 对话中，请 AI 使用 **Plugin Manager 工具**安装本机克隆目录：
@@ -41,7 +41,14 @@ target: /你的绝对路径/dsh-panorama-mode
 
 把路径换成自己的克隆目录。`plugin_manager` 是 Harness 工具，不是终端命令。安装影响当前 Profile；不要手工改写 Profile 清单，也不要复制到应用安装目录。
 
-GitHub 提交不代表已经发布到 npm 或插件市场。在有明确发布记录前，不应假设 npm 上已存在同名包。
+npm 包名为 `@hypershub/dsh-panorama-mode`。当 0.1.0 发布完成后，可以在 Harness 中使用插件管理工具安装：
+
+```text
+action: install_bundle
+target: @hypershub/dsh-panorama-mode@0.1.0
+```
+
+如果注册表尚无该版本，请先使用上面的本地目录安装。npm 发布与市场上架是独立步骤。仓库及本地文件夹名称仍为 `dsh-panorama-mode`。
 
 ## 使用
 

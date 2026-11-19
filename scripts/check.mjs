@@ -35,7 +35,7 @@ for (const file of ['index.js', 'client.js', 'cordis.patch.yml', 'icon.svg']) {
 }
 
 const patch = await readFile(path.join(root, 'cordis.patch.yml'), 'utf8')
-check(patch.includes('name: \'dsh-panorama-mode\''), 'cordis.patch.yml: bundle row must name dsh-panorama-mode')
+check(patch.includes('name: \'@hypershub/dsh-panorama-mode\''), 'cordis.patch.yml: bundle row must name dsh-panorama-mode')
 check(patch.includes('id: panorama-mode'), 'cordis.patch.yml: row id panorama-mode is missing')
 
 for (const locale of ['en', 'zh']) {
@@ -49,7 +49,7 @@ check(icon.trimStart().startsWith('<svg'), 'icon.svg: not an SVG document')
 check((await stat(path.join(root, 'icon.svg'))).size < 256 * 1024, 'icon.svg: exceeds 256 KiB')
 
 const client = await readFile(path.join(root, 'client.js'), 'utf8')
-check(client.includes("id: 'dsh-panorama-mode'"), 'client.js: loader id must be dsh-panorama-mode')
+check(client.includes("id: '@hypershub/dsh-panorama-mode'"), 'client.js: loader id must be dsh-panorama-mode')
 check(client.includes("return { name: 'dsh-panorama-mode-client'"), 'client.js: client export is missing')
 
 /* Element-props lint: a component that reads `t` must be handed one.

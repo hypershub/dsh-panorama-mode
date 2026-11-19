@@ -28,7 +28,7 @@ Panorama adds a button to the conversation header. Open it to follow reasoning, 
 The repository includes the built `client.js`; installing the bundle does not require a build script.
 
 ```sh
-git clone https://github.com/simonguo/dsh-panorama-mode.git
+git clone https://github.com/hypershub/dsh-panorama-mode.git
 ```
 
 In your Harness conversation, ask the agent to install the cloned directory using the **Plugin Manager** tool:
@@ -41,7 +41,14 @@ target: /absolute/path/to/dsh-panorama-mode
 
 Use the absolute clone path on your own machine. `plugin_manager` is a Harness tool, **not a shell command**. Installation applies to the current Profile. Do not manually edit Profile manifests or copy the plugin into the application installation.
 
-An npm publication/market catalog entry is not established by this GitHub repository. Do not assume `npm install dsh-panorama-mode` is available until a release is published.
+The npm package identity is `@hypershub/dsh-panorama-mode`. Once version 0.1.0 is available, install with the Harness tool (not a bare npm dependency install):
+
+```text
+action: install_bundle
+target: @hypershub/dsh-panorama-mode@0.1.0
+```
+
+Registry publication is separate from market listing. If the registry does not yet contain the version, use the local directory method above. The local checkout directory remains `dsh-panorama-mode`.
 
 ## Use
 

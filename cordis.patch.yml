@@ -12,7 +12,7 @@
 # 修改本行会让插件重启，浏览器半侧随之重新取一次默认值。
 - insert:
     - id: panorama-mode
-      name: 'dsh-panorama-mode'
+      name: '@hypershub/dsh-panorama-mode'
       config:
         brandName: Hypers Work
         accent: auto
