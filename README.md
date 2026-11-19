@@ -6,6 +6,12 @@
 
 Panorama adds a button to the conversation header. Open it to follow reasoning, tool execution, task progress and replies through a particle orb, activity list and live preview. It is an independent Cordis bundle that integrates through public extension points without modifying the agent loop.
 
+## Visual preview
+
+![Panorama visual reference: particle orb, execution steps and progress panel](docs/images/panorama-html-reference.webp)
+
+*Screenshot of the user-supplied HTML visual reference, not a capture of the installed plugin. Task names, file previews, percentages and ETA in this demo are illustrative; Panorama uses the actual conversation and the progress rules below. Current controls, branding and labels may differ.*
+
 ## Features
 
 - Live reasoning and response text from the current conversation.

@@ -38,6 +38,7 @@
     "CHANGELOG.md",
     "THIRD_PARTY_NOTICES.md",
     "docs/*.md",
+    "docs/images/*.webp",
     "LICENSE"
   ],
   "devDependencies": {
