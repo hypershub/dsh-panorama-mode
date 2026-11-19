@@ -1,0 +1,26 @@
+# dsh-panorama-mode — 对话「全景模式」（独立分发的客户端插件，不进入 dsh-desktop 源码）。
+#
+# 平面划分：
+#   宿主平面（index.js）只做一件事：把本行 config 里的视觉默认值通过
+#   connection.fetch 的只读 GET 路由交给浏览器半侧；不写会话、不注册工具、不碰凭据。
+#   浏览器平面（client.js）负责全部渲染与动效：
+#     · 对话头部右上角 utilities 的切换按钮（会话内可见）
+#     · shell.overlay 的全屏舞台（粒子光球 / 实时步骤 / 工具流 / token 遥测）
+#     · 舞台内置设置面板（localStorage 覆盖此处默认值）
+#
+# 行 config 是「部署默认值」：用户可在舞台内改，改动存本地，不写回本文件。
+# 修改本行会让插件重启，浏览器半侧随之重新取一次默认值。
+- insert:
+    - id: panorama-mode
+      name: 'dsh-panorama-mode'
+      config:
+        brandName: Hypers Work
+        accent: auto
+        callsign: AVA
+        tagline: DIGITAL EMPLOYEE
+        unit: APAC-01
+        motion: normal
+        density: normal
+        showStream: true
+        showStats: true
+        showRecent: true

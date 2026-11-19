@@ -1,0 +1,65 @@
+{
+  "name": "dsh-panorama-mode",
+  "version": "0.1.0",
+  "description": "Panorama mode for live AI reasoning, tool execution and task progress, with automatic themes and a configurable callsign.",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh-bundle",
+    "visual",
+    "dashboard",
+    "stage"
+  ],
+  "license": "MIT",
+  "author": "Hypers Work",
+  "homepage": "https://github.com/simonguo/dsh-panorama-mode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonguo/dsh-panorama-mode.git"
+  },
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./icon": "./icon.svg",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "locale/*.json",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md",
+    "docs/*.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/test-model.mjs && node scripts/check.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}
