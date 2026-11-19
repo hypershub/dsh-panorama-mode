@@ -10,6 +10,11 @@ on:
         description: 'Exact package.json version to publish (no v prefix)'
         required: true
         type: string
+      verify_only:
+        description: 'Read-only verification of an already submitted version; never publish again'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -60,8 +65,17 @@ jobs:
       - name: Check package contents
         run: npm pack --dry-run
       - name: Publish with npm trusted publishing
+        if: github.event_name != 'workflow_dispatch' || !inputs.verify_only
         run: npm publish --access public --provenance --registry=https://registry.npmjs.org
       - name: Verify published metadata
         run: |
           version=$(node -p 'JSON.parse(require("fs").readFileSync("package.json", "utf8")).version')
-          npm view "@hypershub/dsh-panorama-mode@$version" version dist.integrity dist.attestations --json --registry=https://registry.npmjs.org
+          for attempt in $(seq 1 20); do
+            if npm view "@hypershub/dsh-panorama-mode@$version" version dist.integrity dist.attestations --json --registry=https://registry.npmjs.org --prefer-online; then
+              exit 0
+            fi
+            echo "Registry visibility pending ($attempt/20); read-only retry in 15 seconds."
+            sleep 15
+          done
+          echo 'Publication may still be processing. Inspect npm before retrying; do not republish blindly.' >&2
+          exit 1
