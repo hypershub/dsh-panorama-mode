@@ -4,7 +4,7 @@
 
 **A live, cinematic view of AI execution inside DeepSeek Harness / Hypers Work.**
 
-Panorama adds a button to the conversation header. Open it to follow reasoning, tool execution, task progress and replies through a particle orb, activity list and live preview. It is an independent Cordis bundle, not a modification to `dsh-desktop` or the agent loop.
+Panorama adds a button to the conversation header. Open it to follow reasoning, tool execution, task progress and replies through a particle orb, activity list and live preview. It is an independent Cordis bundle that integrates through public extension points without modifying the agent loop.
 
 ## Features
 
