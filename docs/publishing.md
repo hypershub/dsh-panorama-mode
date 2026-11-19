@@ -33,6 +33,10 @@ Stable semver only; package name/version mismatch fails before publication. Ordi
 - EOTP or authentication errors: confirm the npm trusted-publisher connection, exact repo/workflow identity and supported runner/npm version. Do not introduce a token/OTP secret to bypass the missing connection.
 - Existing version: inspect npm metadata. Never overwrite or unpublish an immutable release merely to rerun a job.
 - Ambiguous network failure after publish: inspect the exact version read-only before retrying; it may already have been published.
-- Verification step failure: publication may have succeeded. Read the npm version and integrity instead of replaying publication.
+- Verification step failure: publication may have succeeded. Use the manual `verify_only: true` input to rerun checks without publishing. Registry visibility checks retry read-only for up to 5 minutes; do not replay publish while npm is processing.
+
+## First trusted release
+
+`0.1.1` was submitted through [Action 44481713669](https://github.com/hypershub/dsh-panorama-mode/actions/runs/44481713669). Its immediate verification initially failed while npm processed the package; a later registry read confirmed version `0.1.1`, tarball SHA-1 `5ab5e3459220f0d3211887fb40a090cccc8590e4`, and SLSA provenance attestations. The verification-only path reconciles this without publishing a duplicate.
 
 `0.1.0` was already found on npm with source gitHead `d3514eb0abdac7af86f151dc866813bc70404c66`; it must not be published again. `0.1.1` introduces this workflow and publishing documentation.
