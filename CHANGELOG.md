@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3 — 2026-11-20
+
+- Replace the header mark with the HypersHub brand logo supplied by the owner, inlined as a 2x PNG data URI so no runtime request reaches the Hub origin.
+- Drop the generated gradient tile: brand artwork renders at its own shape and color, unaffected by the accent palette.
+- Move the mark into `src/client/brand-logo.js`; update provenance notices, development docs and the inline-PNG integrity regression.
 ## 0.1.2 — 2026-11-19
 
 - Click completed/recent result cards to open a flat glass reading panel on the left while execution information remains visible.

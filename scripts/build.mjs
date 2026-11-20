@@ -11,7 +11,7 @@ import path from 'node:path'
 import { build } from 'esbuild'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const PARTS = ['00-head', 'hypers-mark', '10-css', '20-orb', '30-model', '35-results', '40-panels', '50-settings', '60-shell', '70-slots']
+const PARTS = ['00-head', 'brand-logo', '10-css', '20-orb', '30-model', '35-results', '40-panels', '50-settings', '60-shell', '70-slots']
 
 const chunks = []
 for (const part of PARTS) {

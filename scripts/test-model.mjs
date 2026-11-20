@@ -230,7 +230,17 @@ for (const model of [EMPTY_MODEL, empty, running, done, failed, thinking]) {
   const html = renderToStaticMarkup(React.createElement(stageApi.StageShell, { t, onClose: noop }))
   assert.ok(html.includes('class="dvs-root"'), 'shell markup is missing its root')
   assert.ok(html.includes('dvs-frame'), 'shell markup is missing the 1920×1080 frame')
-  assert.ok(html.includes('M23.5583 13.1395'), 'shell markup is missing the Hypers Work mark')
+  assert.ok(html.includes('data:image/png;base64,'), 'shell markup is missing the inlined HypersHub mark')
+  assert.ok(html.includes('class="dvs-mark"'), 'shell markup is missing the brand mark container')
+  if (!globalThis.__logoChecked) {
+    globalThis.__logoChecked = true
+    const uri = html.match(/src="(data:image\/png;base64,[^"]+)"/)?.[1]
+    assert.ok(uri, 'brand mark is not an inlined PNG data URI')
+    const png = Buffer.from(uri.split(',')[1], 'base64')
+    assert.equal(png.subarray(1, 4).toString(), 'PNG', 'brand mark bytes are not a PNG')
+    assert.equal(png.readUInt32BE(16), 76, 'brand mark width changed')
+    assert.equal(png.readUInt32BE(20), 88, 'brand mark height changed')
+  }
   assert.ok(html.includes('dvs-panel'), 'shell markup is missing the right-hand panel')
   assert.ok(html.includes('dvs-identity'), 'shell markup is missing the identity block')
   assert.ok(html.includes(settings.callsign), 'shell markup is missing the callsign')

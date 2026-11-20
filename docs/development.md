@@ -27,7 +27,7 @@ Node.js 22+ is supported for this package's build/test commands. No postinstall 
 | `src/client/50-settings.js` | Appearance controls |
 | `src/client/60-shell.js` | Viewport frame, keyboard/close interaction |
 | `src/client/70-slots.js` | Locale strings, Session feed and public Slot registrations |
-| `src/client/hypers-mark.js` | Inlined Hypers mark, source noted in third-party notices |
+| `src/client/brand-logo.js` | Inlined HypersHub brand mark (base64 data URI), provenance in third-party notices |
 | `client.js` | Generated browser loader bundle; tracked for installation without a build |
 | `scripts/build.mjs` | Assemble authored parts into the loader factory |
 | `scripts/check.mjs` | Syntax, manifest, resource and translator-prop checks |

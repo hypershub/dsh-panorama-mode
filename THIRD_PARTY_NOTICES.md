@@ -10,7 +10,7 @@ The visual layout and particle sphere were adapted from the `Hypers Work · AVA`
 
 ## Hypers mark
 
-`src/client/hypers-mark.js` contains a path adapted from the Hypers Work desktop project's `dsh-plugin-desktop/build/tray-icon.svg`. The repository owner expressly authorized using the project logo in this plugin. The artwork is bundled, not fetched from another service. This does not grant third parties rights to the Hypers Work/HYPERS names or marks, or authorize representing another product as Hypers Work.
+`src/client/brand-logo.js` inlines the HypersHub brand mark supplied by the repository owner from `https://hy.hypershub.com/agent-center/logo-dark.png` (dark-background variant, 139x160 PNG, embedded at 76x88 as a base64 data URI). Artwork is bundled rather than fetched at runtime: the plugin makes no request to the Hub origin. The owner's supply of this file is not an independent verification of upstream ownership or licensing. This does not grant third parties rights to the HypersHub/HYPERS names or marks, or authorize representing another product as HypersHub. Brand artwork is fixed and is not affected by the plugin's accent theme.
 
 ## Simplex noise shader
 

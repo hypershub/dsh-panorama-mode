@@ -50,10 +50,11 @@ const CSS = `
 .dvs-header{position:absolute;left:64px;right:64px;top:44px;height:56px;display:flex;align-items:center;
   justify-content:space-between;z-index:6}
 .dvs-brand{display:flex;align-items:center;gap:16px;min-width:0}
-.dvs-mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;
-  background:linear-gradient(150deg,color-mix(in srgb,var(--b) 88%,#fff),var(--a) 55%,color-mix(in srgb,var(--a) 72%,#000));
-  box-shadow:0 10px 30px -8px color-mix(in srgb,var(--a) 70%,transparent),inset 0 1px 0 rgba(255,255,255,.35)}
-.dvs-mark svg{width:22px;height:22px;display:block}
+/* The HypersHub mark carries its own shape and color: no tile, no gradient,
+   no theme tint, so brand artwork stays exact on every accent palette. */
+.dvs-mark{width:38px;height:44px;display:grid;place-items:center;flex:none}
+.dvs-mark img{width:38px;height:44px;display:block;object-fit:contain;user-select:none;
+  filter:drop-shadow(0 6px 18px rgba(47,107,255,.35))}
 .dvs-brand b{display:block;font-size:20px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
 .dvs-brand small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink3);
   text-transform:uppercase;margin-top:3px;white-space:nowrap}

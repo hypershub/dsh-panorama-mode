@@ -1,6 +1,6 @@
 {
   "name": "@hypershub/dsh-panorama-mode",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Panorama mode for live AI reasoning, tool execution and task progress, with automatic themes and a configurable callsign.",
   "keywords": [
     "deepseek",

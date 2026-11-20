@@ -69,11 +69,15 @@ function StageHeader(props) {
       h(
         'div',
         { className: 'dvs-mark' },
-        h(
-          'svg',
-          { viewBox: '0 0 52 52', width: 26, height: 26, fill: 'none', 'aria-hidden': 'true' },
-          h('path', { d: HYPER_MARK, fill: 'currentColor' }),
-        ),
+        h('img', {
+          src: HYPERSHUB_LOGO,
+          alt: '',
+          width: 38,
+          height: 44,
+          decoding: 'async',
+          draggable: false,
+          'aria-hidden': 'true',
+        }),
       ),
       h(
         'div',
