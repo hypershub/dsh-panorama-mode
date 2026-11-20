@@ -12,6 +12,21 @@ Panorama adds a button to the conversation header. Open it to follow reasoning, 
 
 *Screenshot of the user-supplied HTML visual reference, not a capture of the installed plugin. Task names, file previews, percentages and ETA in this demo are illustrative; Panorama uses the actual conversation and the progress rules below. Current controls, branding and labels may differ.*
 
+## Two places to open it
+
+The header button opens a menu:
+
+| Item | Result |
+| --- | --- |
+| **Open in this window** | The panorama covers the current application viewport. This is the original behavior and stays the default. |
+| **Open in a browser window** | A separate system-browser window with its own client. Keep several open, each on a different display. |
+
+"Open in a browser window" works by asking the Host for this instance's authenticated GUI address (the same launch-token mechanism the product's own browser-access setting uses) and handing it to the system browser, because the desktop shell denies in-app popups. The target Session cannot travel in that address — the token redirect drops the query — so each opener records its Session under an opaque id and addresses that window as `#panorama-window=<id>`: the fragment survives the redirect, keeps every window's address distinct, and tells the Host which intent to claim (90-second expiry, consumed once, memory only, never logged or persisted). The claiming window selects its Session through the public workspace service and retries until that selection is the current one — a new window first restores the shared persisted selection (`localStorage['dsh.sessions.current']`), and a single early call is dropped while the Session list loads. Without the retry, both windows settle on the same conversation.
+
+**A browser window needs browser access to be enabled.** In its default native window the Desktop shell answers every ordinary browser request with `forbidden`; the product's own setting states that browser access is only available in compatibility mode. Turn on **Settings → Browser and local network → Allow opening this Profile in a browser** (compatibility mode) before using this item. Opening the menu asks the Host for its capability (`GET /api/panoramaMode/state`), so the item carries the requirement itself — a warning dot plus the exact setting name — and selecting it explains the gate instead of opening an unusable page (`409 browser-access-disabled`). On a plain `dsh web` Host there is no such gate.
+
+Practical notes: a browser window carries browser chrome, runs a full client (its own memory and GPU cost), shares the same appearance storage, and needs the system default browser. Menus/popups are denied outright in the compatibility shell, where only in-window mode is available. Each window is an independent client; host-side features that assume a single live client may behave differently with several open. A native (non-browser) second window cannot be created by a plugin: only the Electron main process can, and the renderer bridge exposes no window action.
+
 ## Interactive results
 
 Click the completed card or a recent result to replace the left orb with a flat glass reading panel. The execution panel stays visible. Replies render as Markdown headings, lists, code and tables; cards use clean text summaries. Recent results retain only the last settled reply per closed turn. Esc closes the result panel first.
@@ -85,7 +100,7 @@ Counts reflect the **loaded Chat window**, not guaranteed full-session history. 
 
 The API integration was inspected against the installed **DSH core 0.2.2-rc.1**. It uses public `conversation.session.header.utilities` / `shell.overlay` slots, `useChat`, `useSession`, `useProjection` and the optional Session status hook. Later core versions require rechecking their Chat and Slot APIs; universal version/platform compatibility is not claimed.
 
-The Host owns a single authenticated, owner-only read endpoint: `GET /api/panorama-mode/config`. The plugin registers no agent tools, changes no prompts, writes no Session events and adds no external telemetry or CDN resources. Appearance settings are stored locally. Conversation snippets shown on the screen may contain private task text; take care when screen-sharing.
+The Host owns a single authenticated, owner-only read endpoint: `GET /api/panoramaMode/config`. The plugin registers no agent tools, changes no prompts, writes no Session events and adds no external telemetry or CDN resources. Appearance settings are stored locally. Conversation snippets shown on the screen may contain private task text; take care when screen-sharing.
 
 ## Development
 

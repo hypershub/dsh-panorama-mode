@@ -18,11 +18,26 @@ function loadDeployment() {
   return deploymentPromise
 }
 
+const WINDOW_INTENT_ROUTE = '/api/panoramaMode/windowIntent'
+const WINDOW_STATE_ROUTE = '/api/panoramaMode/state'
+const MENU_WIDTH = 236
+
 /* ── locale ─────────────────────────────────────────────────────────────── */
 
 const EN = {
   open: 'Panorama',
-  openHint: 'Open Panorama mode (S for settings, Esc to exit)',
+  openHint: 'Open Panorama mode — this window or a separate browser window',
+  openHere: 'Open in this window',
+  openHereHint: 'Covers this window; the lightest option.',
+  openBrowser: 'Open in a browser window',
+  openBrowserHint: 'Separate window; keep several, on any display.',
+  browserAccessHint: 'Needs Settings → Browser and local network → Allow opening this Profile in a browser (compatibility mode).',
+  addressHint: 'This Host exposes no browser address right now.',
+  browserAccessDisabled: 'Browser access is off. In Settings, turn on "Allow opening this Profile in a browser" (compatibility mode), then retry. / 需要在设置中开启「允许在浏览器中打开」（兼容模式）。',
+  claimMiss: 'This window could not claim its Session. Showing the current conversation; use the header to switch.',
+  selectMiss: 'The requested conversation could not be selected; showing the current one.',
+  popupBlocked: 'The browser blocked the window. Allow pop-ups and retry.',
+  browserOpenFailed: 'Could not open the browser window.',
   stageLabel: 'Panorama mode',
   settings: 'Panorama settings',
   close: 'Close Panorama',
@@ -89,7 +104,18 @@ const EN = {
 
 const ZH = {
   open: '全景模式',
-  openHint: '打开全景模式（S 设置，Esc 退出）',
+  openHint: '打开全景模式：在当前窗口或独立浏览器窗口',
+  openHere: '在当前窗口打开',
+  openHereHint: '覆盖当前窗口，最轻。',
+  openBrowser: '在浏览器中打开',
+  openBrowserHint: '独立窗口，可多开、可拖到其他显示器。',
+  browserAccessHint: '需在「设置 → 浏览器与局域网 → 允许在浏览器中打开」开启，并切换为兼容模式。',
+  addressHint: '当前 Host 没有可用的浏览器地址。',
+  browserAccessDisabled: '浏览器访问未开启：请到「设置 → 浏览器与局域网 → 允许在浏览器中打开」开启，并切换为兼容模式后重试。',
+  claimMiss: '这个窗口没有认领到目标会话，先显示当前会话；可用头部切换。',
+  selectMiss: '未能切换到目标会话，先显示当前会话。',
+  popupBlocked: '浏览器拦截了弹窗，请允许后重试。',
+  browserOpenFailed: '无法打开浏览器窗口。',
   stageLabel: '全景模式',
   settings: '全景模式设置',
   close: '退出全景模式',
@@ -154,6 +180,14 @@ const ZH = {
   reset: '恢复默认',
 }
 
+/** Drop one Session's published model without closing the stage. */
+function releaseFeed(target, sessionId) {
+  const current = target.get()
+  if (current.sessionId !== sessionId) return false
+  target.set({ sessionId: null, model: null })
+  return true
+}
+
 /* ── Session-scoped feed: snapshot → store ──────────────────────────────── */
 
 function StageFeed(props) {
@@ -208,8 +242,9 @@ function StageFeed(props) {
     store.set({ sessionId })
     return () => {
       publisher.current.dispose()
-      const current = store.get()
-      if (current.sessionId === sessionId) store.set({ open: false, sessionId: null, model: null })
+      /* Switching Sessions unmounts this feed, and the stage must survive it:
+         a window that claims a Session necessarily switches to it. */
+      releaseFeed(store, sessionId)
     }
   }, [sessionId])
 
@@ -218,38 +253,313 @@ function StageFeed(props) {
 
 /* ── header toggle ──────────────────────────────────────────────────────── */
 
+/** Placement for the portal menu, clamped to the viewport. */
+function menuPlacement(rect, viewportWidth, width = MENU_WIDTH, margin = 8) {
+  const left = Math.max(margin, Math.min(Math.round(rect.right - width), viewportWidth - width - margin))
+  return { top: Math.round(rect.bottom + 6), left }
+}
+
+/* Opens a second window and reports whether the attempt should be shown as a
+   failure. The native shell denies popups and hands http(s) addresses to the
+   system browser, so a null handle is success there. */
+function openAddress(url, t, setNote, closeMenu) {
+  // No `noopener` feature: it makes window.open return null, which would be
+  // indistinguishable from a blocked popup. Detach the opener instead.
+  const opened = window.open(url, '_blank')
+  if (opened === null) {
+    if (window.dshDesktop || window.dshDesktopActions) closeMenu()
+    else setNote(t('popupBlocked'))
+    return true
+  }
+  try {
+    opened.opener = null
+  } catch {
+    /* A cross-origin handle cannot be touched; the window still opened. */
+  }
+  closeMenu()
+  return true
+}
+
+/** Why the browser item cannot work here, or null when it can. */
+function browserBlockedReason(state, t) {
+  if (state === null || state === undefined) return null
+  if (state.browserAccess === 'disabled') return t('browserAccessHint')
+  if (state.address === false) return t('addressHint')
+  return null
+}
+
 function StageToggle(props) {
   const { sessionId } = props
   const t = asT(props.t)
   const running = props.useSession ? props.useSession(snapshot => snapshot.running) : false
   const open = React.useSyncExternalStore(store.subscribe, () => store.get().open, () => store.get().open)
-  const label = t('open')
+  const [menu, setMenu] = useState(null)
+  const [note, setNote] = useState('')
+  const [capability, setCapability] = useState(null)
+  const buttonRef = useRef(null)
+  const wrapRef = useRef(null)
 
-  const onClick = useCallback(() => {
+  const closeMenu = useCallback(() => {
+    setMenu(null)
+    setNote('')
+  }, [])
+
+  useEffect(() => {
+    if (menu === null) return undefined
+    const onPointerDown = event => {
+      const target = event.target
+      if (wrapRef.current?.contains(target)) return
+      if (target instanceof Element && target.closest('.dvs-open-menu') !== null) return
+      closeMenu()
+    }
+    const onKeyDown = event => {
+      if (event.key !== 'Escape') return
+      event.stopPropagation()
+      closeMenu()
+    }
+    document.addEventListener('pointerdown', onPointerDown, true)
+    window.addEventListener('keydown', onKeyDown, true)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true)
+      window.removeEventListener('keydown', onKeyDown, true)
+    }
+  }, [menu, closeMenu])
+
+  const toggleMenu = useCallback(() => {
+    if (menu !== null) {
+      closeMenu()
+      return
+    }
+    const rect = buttonRef.current?.getBoundingClientRect()
+    if (!rect) return
+    setNote('')
+    setCapability(null)
+    setMenu(menuPlacement(rect, window.innerWidth))
+    /* Ask before the item is used, so the requirement is visible up front. */
+    window
+      .fetch(WINDOW_STATE_ROUTE, { credentials: 'include' })
+      .then(response => (response.ok ? response.json() : null))
+      .then(payload => {
+        if (payload !== null && typeof payload === 'object') setCapability(payload)
+      })
+      .catch(() => {
+        /* No route: the item still tries, and reports its own failure. */
+      })
+  }, [menu, closeMenu])
+
+  /* The in-window mode is unchanged: the stage covers this window's viewport. */
+  const openHere = useCallback(() => {
+    closeMenu()
     store.set({ open: true, sessionId })
-  }, [sessionId])
+  }, [closeMenu, sessionId])
+
+  /* A second window is a real browser window: the Host mints its authenticated
+     address, and this desktop hands that address to the system browser. */
+  const openInBrowser = useCallback(async () => {
+    setNote('')
+    const blocked = browserBlockedReason(capability, t)
+    if (blocked !== null) {
+      setNote(blocked)
+      return
+    }
+    try {
+      const response = await window.fetch(WINDOW_INTENT_ROUTE, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ sessionId: sessionId ?? null }),
+      })
+      if (response.status === 409) {
+        /* Desktop blocks ordinary browsers outside compatibility mode. */
+        setNote(t('browserAccessDisabled'))
+        return
+      }
+      if (!response.ok) {
+        setNote(t('browserOpenFailed') + ' · HTTP ' + response.status)
+        return
+      }
+      const payload = await response.json()
+      if (typeof payload?.url !== 'string') {
+        /* No minted address (headless Host or no listener): a browser that has
+           already used this GUI keeps its cookie, so this origin may still work. */
+        if (payload?.error === 'address-unavailable' && openAddress(location.origin + '/', t, setNote, closeMenu)) return
+        setNote(t('browserOpenFailed') + ' · ' + (payload?.error ?? 'no-address'))
+        return
+      }
+      openAddress(payload.url, t, setNote, closeMenu)
+    } catch (error) {
+      setNote(t('browserOpenFailed') + ' · ' + (error instanceof Error ? error.message : 'error'))
+    }
+  }, [sessionId, t, closeMenu, capability])
+
+  const item = (label, hint, onClick, blocked = null) =>
+    h(
+      'button',
+      {
+        type: 'button',
+        role: 'menuitem',
+        className: 'dvs-open-item' + (blocked === null ? '' : ' is-blocked'),
+        onClick,
+        title: blocked ?? undefined,
+      },
+      h('b', null, label, blocked === null ? null : h('i', { className: 'dvs-open-warn', 'aria-hidden': 'true' })),
+      h('small', null, blocked ?? hint),
+    )
 
   return h(
-    'button',
-    {
-      type: 'button',
-      className: 'dvs-open' + (running ? ' is-running' : '') + (open ? ' is-open' : ''),
-      onClick,
-      title: t('openHint'),
-      'aria-label': t('openHint'),
-      'aria-pressed': open ? 'true' : 'false',
-    },
-    h('span', { className: 'dvs-open-orb' }, IconOrb(13)),
-    h('span', { className: 'dvs-open-label' }, label),
-    h('i', { className: 'dvs-open-dot', 'aria-hidden': 'true' }),
+    'div',
+    { className: 'dvs-open-wrap', ref: wrapRef },
+    h(
+      'button',
+      {
+        type: 'button',
+        ref: buttonRef,
+        className: 'dvs-open' + (running ? ' is-running' : '') + (open ? ' is-open' : ''),
+        onClick: toggleMenu,
+        title: t('openHint'),
+        'aria-label': t('openHint'),
+        'aria-haspopup': 'menu',
+        'aria-expanded': menu === null ? 'false' : 'true',
+      },
+      h('span', { className: 'dvs-open-orb' }, IconOrb(13)),
+      h('span', { className: 'dvs-open-label' }, t('open')),
+      h('i', { className: 'dvs-open-dot', 'aria-hidden': 'true' }),
+      h('span', { className: 'dvs-open-caret', 'aria-hidden': 'true' }, '▾'),
+    ),
+    menu === null
+      ? null
+      : createPortal(
+          h(
+            'div',
+            {
+              className: 'dvs-open-menu',
+              role: 'menu',
+              'aria-label': t('open'),
+              style: { top: menu.top + 'px', left: menu.left + 'px' },
+            },
+            item(t('openHere'), t('openHereHint'), openHere),
+            item(t('openBrowser'), t('openBrowserHint'), openInBrowser, browserBlockedReason(capability, t)),
+            note === '' ? null : h('div', { className: 'dvs-open-note', role: 'alert' }, note),
+          ),
+          document.body,
+        ),
   )
+}
+
+/** @returns {string | null} the window id the opener put in the URL fragment. */
+function windowIntentId() {
+  const marker = 'panorama-window='
+  const hash = typeof window.location?.hash === 'string' ? window.location.hash.replace(/^#/, '') : ''
+  if (!hash.startsWith(marker)) return null
+  const id = hash.slice(marker.length)
+  return id.length > 0 ? id : null
+}
+
+/** The key the workspace service persists the current selection under. */
+const CURRENT_SESSION_KEY = 'dsh.sessions.current'
+
+/** @returns {string | null} the selection another window may have persisted. */
+function persistedSessionId() {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(CURRENT_SESSION_KEY) ?? 'null')
+    return parsed !== null && typeof parsed === 'object' && typeof parsed.sessionId === 'string' ? parsed.sessionId : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Select a Session in a freshly opened window and keep trying until it sticks.
+ *
+ * A new window restores the *shared* persisted selection first, and the Session
+ * list is still loading when the intent arrives, so one immediate call can be
+ * dropped. This retries until the persisted selection is the requested one.
+ *
+ * @param {string} sessionId - Session the opener asked for.
+ * @param {object} io - injected dependencies.
+ * @param {() => boolean} io.select - attempt one selection; false while unavailable.
+ * @param {() => string | null} io.current - read the current selection.
+ * @param {(callback: () => void, ms: number) => unknown} io.later - scheduling seam.
+ * @param {number} [io.attempts] - maximum attempts.
+ * @returns {Promise<boolean>} whether the requested Session became current.
+ */
+function claimSession(sessionId, io) {
+  const attempts = io.attempts ?? 40
+  return new Promise(resolve => {
+    let left = attempts
+    const step = () => {
+      left -= 1
+      let selected = false
+      try {
+        selected = io.select() === true
+      } catch {
+        selected = false
+      }
+      if (selected && io.current() === sessionId) {
+        resolve(true)
+        return
+      }
+      if (left <= 0) {
+        resolve(false)
+        return
+      }
+      io.later(step, selected ? 150 : 250)
+    }
+    step()
+  })
 }
 
 /* ── root-scoped overlay ───────────────────────────────────────────────── */
 
 function StageOverlay(props) {
   const t = asT(props.t)
+  const selectSession = props.selectSession
   const open = React.useSyncExternalStore(store.subscribe, () => store.get().open, () => store.get().open)
+  const claimed = useRef(false)
+
+  /* A freshly opened browser window claims the Session the opener recorded.
+     The token redirect cannot carry a query, so the opener addresses the window
+     through the inherited fragment instead. A page without that marker (the
+     main window, or an ordinary tab) claims nothing and never steals an intent. */
+  useEffect(() => {
+    if (claimed.current) return undefined
+    claimed.current = true
+    const id = windowIntentId()
+    if (id === null) return undefined
+    let alive = true
+    const ask = attempt =>
+      window
+        .fetch(WINDOW_INTENT_ROUTE + '?id=' + encodeURIComponent(id), { credentials: 'include' })
+        .then(response => (response.ok ? response.json() : null))
+        .then(async payload => {
+          const sessionId = payload?.sessionId
+          /* A claim is single use, so a retry only helps before the first answer;
+             later attempts resolve to null and are not repeated. */
+          if (!alive || typeof sessionId !== 'string') {
+            if (attempt === 0) window.setTimeout(() => { if (alive) void ask(1) }, 800)
+            else if (alive) store.set({ notice: 'claim-miss' })
+            return
+          }
+        /* Show the stage first so the window is never blank, then make the
+           requested Session current; a dropped early attempt is retried. */
+        store.set({ open: true, sessionId })
+          if (typeof selectSession !== 'function') return
+          const selected = await claimSession(sessionId, {
+            select: () => selectSession(sessionId),
+            current: persistedSessionId,
+            later: (callback, ms) => window.setTimeout(callback, ms),
+          })
+          if (alive && !selected) store.set({ notice: 'select-miss' })
+        })
+    void ask(0)
+      .catch(() => {
+        /* No pending intent, or no route: the window opens as an ordinary one. */
+      })
+    return () => {
+      alive = false
+    }
+  }, [selectSession])
+
   if (!open) return null
   const close = () => {
     store.set({ open: false })
@@ -273,6 +583,21 @@ const CLIENT_CSS = `
 .dvs-open.is-open{border-color:var(--dsw-alias-brand-primary);color:var(--dsw-alias-label-primary)}
 @keyframes dvs-open-pulse{50%{opacity:.25}}
 @media (max-width:900px){.dvs-open-label{display:none}}
+.dvs-open-wrap{display:inline-flex;position:relative}
+.dvs-open-caret{margin-left:1px;font-size:9px;opacity:.6;line-height:1}
+.dvs-open-menu{position:fixed;z-index:2147483000;width:236px;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:2px;
+  border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-overlay);
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.65)}
+.dvs-open-item{display:flex;flex-direction:column;gap:3px;align-items:flex-start;padding:8px 10px;border:0;border-radius:7px;
+  background:transparent;color:var(--dsw-alias-label-primary);font:inherit;font-size:12px;line-height:1.35;cursor:pointer;text-align:left}
+.dvs-open-item:hover{background:var(--dsw-alias-bg-layer-2)}
+.dvs-open-item:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:-2px}
+.dvs-open-item b{font-weight:500}
+.dvs-open-item small{font-size:11px;color:var(--dsw-alias-label-secondary)}
+.dvs-open-note{padding:6px 10px 2px;font-size:11px;color:var(--dsw-alias-state-error-primary)}
+.dvs-open-item.is-blocked small{color:var(--dsw-alias-state-warn-primary)}
+.dvs-open-warn{display:inline-block;width:5px;height:5px;margin-left:6px;border-radius:50%;
+  background:var(--dsw-alias-state-warn-primary);vertical-align:middle}
 `
 
 function apply(ctx) {
@@ -316,6 +641,19 @@ function apply(ctx) {
     name:'conversation.chat.turnTail',id:'panorama-mode.file-opener',locale:'avaStage',
   },ResultFileBridge))
 
+  /* A browser window opened for Panorama claims its Session through the public
+     workspace service; a missing service leaves the ordinary window. */
+  const selectSession = sessionId => {
+    try {
+      const workspace = ctx.get('uiWorkspace')
+      if (workspace?.openSession === undefined) return false
+      workspace.openSession(sessionId)
+      return true
+    } catch {
+      /* Selection failure must not break the stage; the caller retries. */
+      return false
+    }
+  }
   ctx.slots.inject('shell.overlay', () =>
     ctx.slots.register(
       {
@@ -324,7 +662,7 @@ function apply(ctx) {
         order: 900,
         locale: 'avaStage',
       },
-      StageOverlay,
+      props => h(StageOverlay, { ...props, selectSession }),
     ),
   )
 }
@@ -333,6 +671,14 @@ function apply(ctx) {
 if (typeof window !== 'undefined' && window.__AVA_STAGE_TEST__ === true) {
   window.__AVA_STAGE_TEST_API = {
     buildModel,
+    menuPlacement,
+    openAddress,
+    browserBlockedReason,
+    claimSession,
+    releaseFeed,
+    windowIntentId,
+    persistedSessionId,
+    StageToggle,
     safeTarget, plainMarkdown, resultResources, ResultMarkdown, ResultReader,
     EMPTY_MODEL,
     store,

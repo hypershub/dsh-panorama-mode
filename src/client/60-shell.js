@@ -73,6 +73,7 @@ function StageShell(props) {
   const toastTimer = useRef(0)
   const { settings, apply, reset } = useStageSettings()
   const model = React.useSyncExternalStore(store.subscribe, () => store.get().model, () => store.get().model)
+  const notice = React.useSyncExternalStore(store.subscribe, () => store.get().notice, () => store.get().notice)
   const view = model || EMPTY_MODEL
 
   const flash = useCallback(message => {
@@ -83,6 +84,13 @@ function StageShell(props) {
 
 
   useEffect(() => () => window.clearTimeout(toastTimer.current), [])
+
+  /* A claim miss is stated once, in the stage, instead of failing silently. */
+  useEffect(() => {
+    if (notice === null) return
+    store.set({ notice: null })
+    flash(t(notice === 'select-miss' ? 'selectMiss' : 'claimMiss'))
+  }, [notice, flash, t])
 
   /* The board is authored at 1920×1080; scale the whole frame so every
      proportion of the reference survives any window size. */

@@ -52,6 +52,19 @@ const client = await readFile(path.join(root, 'client.js'), 'utf8')
 check(client.includes("id: '@hypershub/dsh-panorama-mode'"), 'client.js: loader id must be dsh-panorama-mode')
 check(client.includes("return { name: 'dsh-panorama-mode-client'"), 'client.js: client export is missing')
 
+/* Exact connection.fetch routes: the Harness rejects any path segment outside
+   [A-Za-z0-9_$.-], and a rejected registration leaves the route silently absent. */
+const SEGMENT = /^[A-Za-z0-9_$.-]+$/
+const routeSources = { 'index.js': await readFile(path.join(root, 'index.js'), 'utf8'), 'client.js': client }
+for (const [file, text] of Object.entries(routeSources)) {
+  for (const match of text.matchAll(/['"`](\/api\/[^'"`]*)['"`]/g)) {
+    const route = match[1]
+    const segments = route.slice('/api/'.length).split('/')
+    const valid = segments.every(segment => segment !== '' && segment !== '.' && segment !== '..' && SEGMENT.test(segment))
+    check(valid, `${file}: Fetch route ${route} would be rejected by the Harness segment pattern`)
+  }
+}
+
 /* Element-props lint: a component that reads `t` must be handed one.
    Without browser control this is the cheapest stand-in for a rendered
    tree walk over the composer the unit test cannot execute (StageShell). */

@@ -49,8 +49,10 @@ new Function('window', 'document', source)(globalThis.window, globalThis.documen
 assert.ok(registered, 'client bundle did not register a factory')
 assert.equal(registered.id, '@hypershub/dsh-panorama-mode')
 
+const ReactDOM = requireLocal('react-dom')
 const api = registered.factory(name => {
   if (name === 'react') return React
+  if (name === 'react-dom') return ReactDOM
   throw new Error('unexpected module request: ' + name)
 })
 assert.equal(api.name, 'dsh-panorama-mode-client')
@@ -312,4 +314,129 @@ assert.equal(withFiles.recent[0].presented.length,3,'historical result retains p
 const fileReader=renderToStaticMarkup(React.createElement(stageApi.ResultReader,{result:withFiles.deliverable,sessionId:'s1',onClose:noop,t}))
 for(const name of ['deck.pptx','deck.univer','contact.png'])assert.ok(fileReader.includes(name))
 assert.ok(!fileReader.includes('<img'),'local image does not bypass the native file opener')
+
+/* ── browser window: one-shot Session handoff and menu placement ───────── */
+
+{
+  const host = await import('../index.js')
+  let clock = 1000
+  const intent = host.createWindowIntent(() => clock)
+  const firstId = intent.remember('session-a')
+  assert.ok(firstId.length > 0, 'each window request mints an id')
+  assert.equal(intent.claim(null), null, 'an unaddressed page claims nothing')
+  assert.equal(intent.claim('unknown-id'), null, 'an unknown id claims nothing')
+  assert.equal(intent.claim(firstId), 'session-a', 'the addressed window claims its Session')
+  assert.equal(intent.claim(firstId), null, 'a claim is single use')
+
+  const secondId = intent.remember('session-b')
+  assert.notEqual(secondId, firstId, 'two windows are addressed differently')
+  clock += 90_000
+  assert.equal(intent.claim(secondId), null, 'an expired intent is not delivered')
+  assert.equal(intent.size(), 0, 'expired intents are dropped')
+
+  assert.equal(host.normalizeConfig({}).brandName, 'Hypers Work')
+  const hostSource = await readFile(path.join(root, 'index.js'), 'utf8')
+  assert.ok(hostSource.includes("'/api/panoramaMode/windowIntent'"), 'the intent route uses Harness-valid segments')
+  assert.ok(!/\/api\/panorama-mode\//.test(hostSource + source), 'hyphenated route segments are rejected by the Harness')
+}
+
+assert.deepEqual(stageApi.menuPlacement({ right: 300, bottom: 40 }, 1200, 236, 8), { top: 46, left: 64 })
+assert.deepEqual(stageApi.menuPlacement({ right: 1190, bottom: 40 }, 1200, 236, 8), { top: 46, left: 954 }, 'menu right-aligns to the trigger and stays inside the viewport')
+assert.deepEqual(stageApi.menuPlacement({ right: 200, bottom: 20 }, 200, 236, 8), { top: 26, left: 8 }, 'narrow viewport clamps to the left margin')
+
+{
+  const calls = []
+  const previousOpen = window.open
+  try {
+    window.open = (url, target) => { calls.push([url, target]); return { opener: 'opener' } }
+    const codes = []
+    const closes = []
+    stageApi.openAddress('http://127.0.0.1:1/?token=t', l => l, c => codes.push(c), () => closes.push('closed'))
+    assert.deepEqual(calls, [['http://127.0.0.1:1/?token=t', '_blank']], 'a window opens at the minted address')
+    assert.equal(closes.length, 1, 'success closes the menu')
+    window.open = () => null
+    const blocked = []
+    stageApi.openAddress('http://127.0.0.1:1/', l => l, c => blocked.push(c), () => {})
+    assert.deepEqual(blocked, ['popupBlocked'], 'a blocked popup is reported')
+    window.dshDesktop = { protocolVersion: 1 }
+    const shellCloses = []
+    stageApi.openAddress('http://127.0.0.1:1/', l => l, c => blocked.push(c), () => shellCloses.push('closed'))
+    assert.equal(shellCloses.length, 1, 'the native shell handing off to the system browser counts as success')
+    delete window.dshDesktop
+  } finally {
+    window.open = previousOpen
+  }
+}
+
+/* The window id travels in the fragment, which survives the token redirect. */
+{
+  const previous = globalThis.window.location
+  const read = hash => {
+    globalThis.window.location = { hash }
+    return stageApi.windowIntentId()
+  }
+  try {
+    assert.equal(read(''), null, 'an ordinary tab has no window id')
+    assert.equal(read('#'), null)
+    assert.equal(read('#session=abc'), null, 'an unrelated fragment is ignored')
+    assert.equal(read('#panorama-window='), null, 'an empty id is ignored')
+    assert.equal(read('#panorama-window=k3x9'), 'k3x9', 'the id is read from the fragment')
+  } finally {
+    globalThis.window.location = previous
+  }
+}
+
+/* A Session switch must not close the stage a new window just opened. */
+{
+  const target = { state: { open: true, sessionId: 'a', model: { display: 'done' }, notice: null },
+    get() { return this.state },
+    set(patch) { this.state = { ...this.state, ...patch } } }
+  const released = stageApi.releaseFeed(target, 'a')
+  assert.equal(released, true, 'the departing feed releases its model')
+  assert.equal(target.state.open, true, 'the stage stays open across a Session switch')
+  assert.equal(target.state.model, null, 'only the model is dropped')
+  assert.equal(stageApi.releaseFeed(target, 'b'), false, 'another Session cannot release this feed')
+}
+
+/* A new window retries until the requested Session is actually current. */
+{
+  let current = 'session-old'
+  let attempts = 0
+  const ok = await stageApi.claimSession('session-new', {
+    attempts: 5,
+    select: () => {
+      attempts += 1
+      if (attempts < 3) return false
+      current = 'session-new'
+      return true
+    },
+    current: () => current,
+    later: callback => callback(),
+  })
+  assert.equal(ok, true, 'the claim resolves once the Session becomes current')
+  assert.equal(attempts, 3, 'an unavailable selection is retried')
+
+  const stolen = await stageApi.claimSession('session-a', {
+    attempts: 3,
+    select: () => true,
+    current: () => 'session-b',
+    later: callback => callback(),
+  })
+  assert.equal(stolen, false, 'a selection that never sticks reports failure')
+}
+
+/* The menu states the requirement before the item is used. */
+const tr = key => key
+assert.equal(stageApi.browserBlockedReason(null, tr), null, 'unknown capability adds no hint')
+assert.equal(stageApi.browserBlockedReason({ browserAccess: 'unrestricted', address: true }, tr), null)
+assert.equal(stageApi.browserBlockedReason({ browserAccess: 'enabled', address: true }, tr), null)
+assert.equal(stageApi.browserBlockedReason({ browserAccess: 'disabled', address: true }, tr), 'browserAccessHint')
+assert.equal(stageApi.browserBlockedReason({ browserAccess: 'unrestricted', address: false }, tr), 'addressHint')
+
+const toggleMarkup = renderToStaticMarkup(React.createElement(stageApi.StageToggle, { sessionId: 's1', t: l => l, useSession: selector => selector({ running: false }) }))
+assert.ok(toggleMarkup.includes('aria-haspopup="menu"'), 'toggle advertises its menu')
+assert.ok(toggleMarkup.includes('aria-expanded="false"'), 'menu starts closed')
+assert.ok(!toggleMarkup.includes('dvs-open-menu'), 'closed toggle portals no menu')
+assert.ok(toggleMarkup.includes('dvs-open-caret'), 'toggle shows the disclosure caret')
+
 console.log('panorama-mode model/render test passed')

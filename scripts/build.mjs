@@ -28,6 +28,8 @@ window.__ModuleLoader__.load({
   factory(require) {
     const React = require('react')
     const h = React.createElement
+    // Portaled UI must escape the header's overflow clipping.
+    const createPortal = require('react-dom').createPortal
 ${tokenizer.outputFiles[0].text}
     const marked = PanoramaMarkdown.marked
 `

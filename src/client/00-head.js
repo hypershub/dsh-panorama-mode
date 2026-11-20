@@ -40,7 +40,7 @@ const DEFAULTS = {
 
 // Preserve existing appearance choices across the package rename.
 const STORAGE_KEY = 'dsh-ava-stage.settings.v1'
-const CONFIG_ROUTE = '/api/panorama-mode/config'
+const CONFIG_ROUTE = '/api/panoramaMode/config'
 
 /** Accent palettes: same role split as the reference art (core, warm, cool, success). */
 const PALETTES = {
@@ -251,6 +251,8 @@ const store = createStore({
   open: false,
   sessionId: null,
   model: null,
+  /* One-shot message the stage shows once, such as a claim miss. */
+  notice: null,
 })
 
 /** Coalesces model publications: at most one React update per 120 ms. */
